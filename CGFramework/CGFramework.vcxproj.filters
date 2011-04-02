@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="OpenGL/Windows">
+      <UniqueIdentifier>{7eb6ebc4-3139-4fbb-b0e0-057e7f929b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL/Windows\Header">
+      <UniqueIdentifier>{77da182a-8da7-4829-a844-e2aea0674e8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL/Windows\Source">
+      <UniqueIdentifier>{62ed5baf-95a8-485b-bcdb-34d90e6ea7f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{03919a60-d6b7-4023-8099-317e6467b75a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\Header">
+      <UniqueIdentifier>{c4f6e9c1-b62f-4b7d-9fe4-5eb0f32a0b3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\Source">
+      <UniqueIdentifier>{0361f1cc-e736-457f-a4f9-2bfad4911fc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{9a6ea12f-ebb5-49a9-91f2-4d8a8999ac84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\Header">
+      <UniqueIdentifier>{3ccea13c-ccc0-4b72-bcca-1d0fe3a346fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\Source">
+      <UniqueIdentifier>{d8730463-f39a-4828-bc48-c6ded75a5b43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{5aee7b17-3726-4041-80c1-c4795e7be2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content">
+      <UniqueIdentifier>{ddd31096-c30f-4cd9-ac2a-57a37ad7e2bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\ObjLoader">
+      <UniqueIdentifier>{e1c4c4f0-c76b-47d9-afc6-1afd8629738e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\ObjLoader\Header">
+      <UniqueIdentifier>{68b29198-ac67-422f-8832-86e09a1e829f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\ObjLoader\Source">
+      <UniqueIdentifier>{472853fb-9e40-492f-a56d-06b58a5c6daa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{fb44c20c-7baf-4869-a0de-13908e7dda46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Header">
+      <UniqueIdentifier>{2bcca8af-c0f1-49f1-b97d-3a371d06cee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Source">
+      <UniqueIdentifier>{76064a24-3249-4643-963b-6247c8296452}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WindowsWrapper.cpp">
+      <Filter>OpenGL/Windows\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineInterface.cpp">
+      <Filter>Interface\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Utility\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="GLWrapper.cpp">
+      <Filter>OpenGL/Windows\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WindowsWrapper.h">
+      <Filter>OpenGL/Windows\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IApp.h">
+      <Filter>Interface\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInterface.h">
+      <Filter>Interface\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Utility\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CGLab2.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="GLWrapper.h">
+      <Filter>OpenGL/Windows\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Error.h">
+      <Filter>Utility\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjLoader.h">
+      <Filter>Content\ObjLoader\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Point3.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Content\ObjLoader\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Submesh.h">
+      <Filter>Content\ObjLoader\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Content\ObjLoader\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Content\ObjLoader\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,20 @@
+﻿Build started 3/11/2011 8:11:53 PM.
+     1>Project "C:\Users\Tracy\Desktop\Homework\OpenGL Stuff\CGFramework\CGFramework.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\CGFramework.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+       Manifest:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file "Debug\CGFramework.unsuccessfulbuild".
+         Touching "Debug\CGFramework.lastbuildstate".
+     1>Done Building Project "C:\Users\Tracy\Desktop\Homework\OpenGL Stuff\CGFramework\CGFramework.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.18
