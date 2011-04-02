@@ -1,0 +1,51 @@
+l it i<?xml version="1.0" encoding="utf-8"?>
+
+<Material name ="CupInsideMaterial">
+  <!--Choose a shader/tech that supports your semantics-->
+  <Effect name ="Cel" path ="Cel.fx"/>
+  <Technique name ="Toon"/>
+  <RenderType type ="TriangleList"/>
+  
+  <!--All needed texture objects of this mesh-->
+  <!--The semantic is the name of the semantic in the shader
+  this data is then loaded in and passed during render-->
+  <TextureObjects>
+    <Texture semantic ="Tex0"   path ="cup.jpg"/>
+  </TextureObjects>
+  
+  <!--Any effect semantics that you want statically defined-->
+  
+  <!-- You can see here that I define one of the static parameters
+  for the shader in this file, this parameter sets the distance
+  of the edge offset for the cartoon shader-->
+  <EffectData>
+    <Data semantic ="EdgeOff"   value =".004"/>
+  </EffectData>
+  
+  <!--May add render states here-->
+</Material>
+
+<Material name ="CupOutsideMaterial">
+  <!--Choose a shader/tech that supports your semantics-->
+  <Effect name ="Cel" path ="Cel.fx"/>
+  <Technique name ="Toon"/>
+  <RenderType type ="TriangleList"/>
+  
+  <!--All needed texture objects of this mesh-->
+  <!--The semantic is the name of the semantic in the shader
+  this data is then loaded in and passed during render-->
+  <TextureObjects>
+    <Texture semantic ="Tex0"   path ="cup.jpg"/>
+  </TextureObjects>
+  
+  <!--Any effect semantics that you want statically defined-->
+  
+  <!-- You can see here that I define one of the static parameters
+  for the shader in this file, this parameter sets the distance
+  of the edge offset for the cartoon shader-->
+  <EffectData>
+    <Data semantic ="EdgeOff"   value =".004"/>
+  </EffectData>
+  
+  <!--May add render states here-->
+</Material>
