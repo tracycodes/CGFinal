@@ -1,0 +1,4 @@
+CGFramework/Debug/ #Ignore all the build files
+CGFramework/ipch/  #More build files
+CGFramework/CGFramework.sdf #Local DB for symbols, like 30mb, leave it out
+CGFramework/CGFramework.suo #Local Solution file
