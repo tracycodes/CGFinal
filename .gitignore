@@ -1,4 +1,8 @@
-CGFramework/Debug/ #Ignore all the build files
-CGFramework/ipch/  #More build files
-CGFramework/CGFramework.sdf #Local DB for symbols, like 30mb, leave it out
-CGFramework/CGFramework.suo #Local Solution file
+#Ignore build specific files in the directory tree and the symbol database
+#and solution files specific to the project. These can just be reacreeated
+#locally, and will prevent us from uploading 30mb of data.
+
+CGFramework/Debug
+CGFramework/ipch
+CGFramework/CGFramework.sdf
+CGFramework/CGFramework.suo
