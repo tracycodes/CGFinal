@@ -78,20 +78,30 @@
     <ClCompile Include="EngineInterface.cpp" />
     <ClCompile Include="GLWrapper.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RenderBatch.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WindowsWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CGLab2.h" />
+    <ClInclude Include="Controllable.h" />
     <ClInclude Include="EngineInterface.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="GLWrapper.h" />
     <ClInclude Include="IApp.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="KeyboardState.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MouseState.h" />
     <ClInclude Include="ObjLoader.h" />
+    <ClInclude Include="Point2.h" />
     <ClInclude Include="Point3.h" />
+    <ClInclude Include="Renderable.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RenderBatch.h" />
     <ClInclude Include="Submesh.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="Timer.h" />

@@ -10,7 +10,7 @@ Purpose:	Initializes Windows and prepares the HWND
 #ifndef WINDOWSWRAPPER_H
 #define WINDOWSWRAPPER_H
 
-//Standard Library Inclusions
+//Standard Library Includes
 #include <string>
 #ifndef WIN32_LEAN_AND_MEAN
 	#define WIN32_LEAN_AND_MEAN
@@ -18,6 +18,10 @@ Purpose:	Initializes Windows and prepares the HWND
 #include <windows.h>
 #include <cmath>
 #include <stdexcept>
+
+//Engine Includes
+#include "KeyboardState.h"
+#include "MouseState.h"
 
 namespace CGFramework
 {
@@ -28,6 +32,8 @@ namespace CGFramework
 		bool IsRunning() const {return mRunning;}
 		void MessageHandler();
 		void SetWindowTitle(const std::string& title);
+		void PollKeyboard(KeyboardState& state);
+		void PollMouse(MouseState& state);
 		HWND GetHandle(){return mHwnd;}
 		LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 		~WindowsWrapper(){DestroyWindow(mHwnd);}
@@ -45,6 +51,8 @@ namespace CGFramework
 		int	mFullWidth;
 		int mFullHeight;
 		std::string mTitle;
+		bool mKeyboard[256];
+		bool mMouse[3];
 	};
 }
 

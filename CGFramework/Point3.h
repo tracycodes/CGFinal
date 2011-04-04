@@ -8,7 +8,6 @@
 
 namespace CGMath
 {
-	
 	class Point3
 	{
 		public:

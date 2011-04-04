@@ -29,9 +29,9 @@ void EngineInterface::Run()
 		//Run windows messages
 		mWindows.MessageHandler();
 
-		//Pool Input
-		//mInput.PollKeyboard(mKeyboardState);
-		//mInput.PollMouse(mMouseState);
+		//Update Input Data Structures
+		//mWindows.PollKeyboard(mKeyboardState);
+		//mWindows.PollMouse(mMouseState);
 
 		//Update Phase
 		mTimer.Update();
@@ -69,5 +69,5 @@ void EngineInterface::UpdateEngine(float dt)
 	//Print the fps: TEMP
 	std::stringstream st;
 	st << mTimer.GetFps();// << "\tx:" << mMouseState.GetZoom() << "\ty:" << mMouseState.GetY();
-	mWindows.SetWindowTitle(st.str());
+	//mWindows.SetWindowTitle(st.str());
 }

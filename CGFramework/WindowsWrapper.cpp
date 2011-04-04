@@ -27,6 +27,9 @@ WindowsWrapper::WindowsWrapper(const std::string& title, HINSTANCE hInst, int wi
 	wc.lpszClassName = "EmptyEngine";
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH); 
 
+	//Empty out the Keyboard and Mouse Arrays
+	memset(&mKeyboard, 0, sizeof(mKeyboard));
+	memset(&mMouse, 0, sizeof(mMouse));
 
 	//Assigns the struct to the window
 	if(!RegisterClassEx(&wc))
@@ -117,6 +120,17 @@ LRESULT CALLBACK WindowsWrapper::WindowProc(HWND hWnd, UINT message, WPARAM wPar
 				mRunning = false;
 				break;
 			}
+		case WM_KEYDOWN:
+			{
+				mKeyboard[wParam] = true;
+				char parm[10];
+				sprintf(parm,"%d",wParam);
+				SetWindowTitle(std::string(parm));
+			}
+		case WM_KEYUP:
+			{
+				mKeyboard[wParam] = false;
+			}
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 	}
@@ -127,4 +141,14 @@ void WindowsWrapper::SetWindowTitle(const std::string& title)
 {
 	mTitle = title;
 	SetWindowText(mHwnd, mTitle.c_str());
+}
+
+void WindowsWrapper::PollKeyboard(KeyboardState& state)
+{
+	
+}
+
+void WindowsWrapper::PollMouse(MouseState& state)
+{
+
 }

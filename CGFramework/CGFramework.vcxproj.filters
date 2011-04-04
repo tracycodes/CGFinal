@@ -52,6 +52,15 @@
     <Filter Include="Math\Source">
       <UniqueIdentifier>{76064a24-3249-4643-963b-6247c8296452}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{c313c13a-e578-44d8-b6bf-808b4519a504}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Header">
+      <UniqueIdentifier>{aff1bfd9-b680-49c7-bef5-b1a2d463e205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Source">
+      <UniqueIdentifier>{9bc106d6-5ba5-404d-aae6-4d16df70a78c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowsWrapper.cpp">
@@ -68,6 +77,12 @@
     </ClCompile>
     <ClCompile Include="GLWrapper.cpp">
       <Filter>OpenGL/Windows\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderBatch.cpp">
+      <Filter>Renderer\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +138,30 @@
       <Filter>Math\Header</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderBatch.h">
+      <Filter>Renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllable.h">
+      <Filter>Renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardState.h">
+      <Filter>Renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseState.h">
+      <Filter>Renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2.h">
       <Filter>Math\Header</Filter>
     </ClInclude>
   </ItemGroup>
