@@ -3,8 +3,6 @@
 
 namespace CGFramework
 {
-	const int NUM_KEYS = 256;
-
 	enum Keyboard	//LONG CHARACTER SET! : This maps over the win32 character (ascii) set
 	{
 		//Number Row
@@ -112,6 +110,8 @@ namespace CGFramework
 	class KeyboardState
 	{
 	public:
+		static const int NumKeys = 256;
+		friend class WindowsWrapper;
 		KeyboardState()
 		{
 			Reset();
@@ -130,15 +130,12 @@ namespace CGFramework
 		}
 		void Reset()
 		{
-			for(unsigned int i = 0; i < NUM_KEYS; ++i) 
-			{
-				mKeyPressed[i] = 0;
-				mKeyLocked[i] = 0;
-			}
+			memset(mKeyPressed, 0, sizeof(mKeyPressed));
+			memset(mKeyLocked, 0, sizeof(mKeyLocked));
 		}
 	private:
-		bool mKeyPressed[NUM_KEYS];
-		bool mKeyLocked[NUM_KEYS];
+		bool mKeyPressed[NumKeys];
+		bool mKeyLocked[NumKeys];
 	};
 }
 #endif

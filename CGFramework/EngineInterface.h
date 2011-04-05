@@ -14,6 +14,8 @@ Purpose:	Organizes all components of the engine
 #include "WindowsWrapper.h"
 #include "Timer.h"
 #include "GLWrapper.h"
+#include "KeyboardState.h"
+#include "MouseState.h"
 
 //Standard Library Inclusions
 #include <string>
@@ -27,8 +29,8 @@ namespace CGFramework
 	public:
 		EngineInterface(const std::string& title, HINSTANCE hInst, int width, int height);
 		void SetApplication(IApp* app);
-		//KeyboardState* GetKeyboardPtr(){return &mKeyboardState;}
-		//MouseState* GetMousePtr(){return &mMouseState;}
+		KeyboardState* GetKeyboardPtr(){return &mKeyboardState;}
+		MouseState* GetMousePtr(){return &mMouseState;}
 		void Run();
 		void Release();
 		~EngineInterface();
@@ -46,8 +48,8 @@ namespace CGFramework
 		IApp* mApp;
 
 		//Engine Components
-		//KeyboardState mKeyboardState;
-		//MouseState mMouseState;
+		KeyboardState mKeyboardState;
+		MouseState mMouseState;
 	};
 }
 

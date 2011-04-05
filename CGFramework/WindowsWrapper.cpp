@@ -29,6 +29,7 @@ WindowsWrapper::WindowsWrapper(const std::string& title, HINSTANCE hInst, int wi
 
 	//Empty out the Keyboard and Mouse Arrays
 	memset(&mKeyboard, 0, sizeof(mKeyboard));
+
 	memset(&mMouse, 0, sizeof(mMouse));
 
 	//Assigns the struct to the window
@@ -80,22 +81,16 @@ LRESULT CALLBACK WindowsWrapper::StaticWinProc(HWND hWnd, UINT message, WPARAM w
 	WindowsWrapper* wnd = 0;
 
 	if(message == WM_NCCREATE)
-	{
 		SetWindowLong(hWnd, GWL_USERDATA, reinterpret_cast<long>((LPCREATESTRUCT(lParam))->lpCreateParams));
-	}
 	else
-	{
 		wnd = reinterpret_cast<WindowsWrapper*>(GetWindowLong(hWnd, GWL_USERDATA));
-	}
 
 	if(message == WM_QUIT)
-	{
 		PostMessage(hWnd, WM_QUIT, 0, 0);
-	}
+
 	if(wnd)
-	{
 		return wnd->WindowProc(hWnd, message, wParam, lParam);
-	}
+
 	return DefWindowProc(hWnd, message, wParam, lParam);
 
 }
@@ -123,13 +118,41 @@ LRESULT CALLBACK WindowsWrapper::WindowProc(HWND hWnd, UINT message, WPARAM wPar
 		case WM_KEYDOWN:
 			{
 				mKeyboard[wParam] = true;
-				char parm[10];
-				sprintf(parm,"%d",wParam);
-				SetWindowTitle(std::string(parm));
+				break;
 			}
 		case WM_KEYUP:
 			{
 				mKeyboard[wParam] = false;
+				break;
+			}
+		case WM_MOUSEMOVE:
+			{
+				//Drag Events 
+				/*if(wParam & MK_LBUTTON)
+					mMouse[Mouse::LEFT_CLICK] = true;
+				if(wParam & MK_RBUTTON)
+					mMouse[Mouse::RIGHT_CLICK] = true;
+				if(wParam & MK_MBUTTON)
+					mMouse[Mouse::MIDDLE_CLICK] = true;*/
+
+				mMouseX = MAKEPOINTS(lParam).x;
+				mMouseY = MAKEPOINTS(lParam).y;
+				break;
+			}
+		case WM_LBUTTONDOWN:
+			{
+				mMouse[Mouse::LEFT_CLICK] = true;
+				break;
+			}
+		case WM_RBUTTONDOWN:
+			{
+				mMouse[Mouse::RIGHT_CLICK] = true;
+				break;
+			}
+		case WM_MBUTTONDOWN:
+			{
+				mMouse[Mouse::MIDDLE_CLICK] = true;
+				break;
 			}
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
@@ -145,10 +168,14 @@ void WindowsWrapper::SetWindowTitle(const std::string& title)
 
 void WindowsWrapper::PollKeyboard(KeyboardState& state)
 {
-	
+	memcpy(state.mKeyPressed, mKeyboard, sizeof(mKeyboard));
 }
 
 void WindowsWrapper::PollMouse(MouseState& state)
 {
-
+	memcpy(state.mButtonPressed, mMouse, sizeof(mMouse));
+	state.mRelativePosition.SetX(mMouseX - state.mScreenPosition.x);
+	state.mRelativePosition.SetY(mMouseY - state.mScreenPosition.y);
+	state.mScreenPosition.SetX(mMouseX);
+	state.mScreenPosition.SetY(mMouseY);
 }

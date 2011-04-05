@@ -10,15 +10,14 @@ namespace CGFramework
 	{
 		LEFT_CLICK = 0,
 		RIGHT_CLICK = 1,
-		CENTER_CLICK = 2,
-		OTHER = 3,
+		MIDDLE_CLICK = 2,
 	};
-	const int NUM_BUTTONS = 4;
 
 	class MouseState
 	{
 	public:
-		friend class WindowsInput;
+		static const int NumButtons = 3;
+		friend class WindowsWrapper;
 		MouseState()
 		{
 			Reset();
@@ -40,7 +39,7 @@ namespace CGFramework
 		{
 			mRelativePosition.Set(0,0);
 			mZoom = 0;
-			for(unsigned int i = 0; i < NUM_BUTTONS; ++i)
+			for(unsigned int i = 0; i < NumButtons; ++i)
 			{
 				mButtonPressed[i] = 0;
 				mButtonLocked[i] = 0;
@@ -64,13 +63,12 @@ namespace CGFramework
 			mScreenPosition.x += x;
 			mScreenPosition.y += y;
 		}
-		char mButtons[NUM_BUTTONS];
-		bool mButtonPressed[NUM_BUTTONS];
-		bool mButtonLocked[NUM_BUTTONS];
+
+		bool mButtonPressed[NumButtons];
+		bool mButtonLocked[NumButtons];
 		CGMath::Point2 mRelativePosition, mScreenPosition;
 		float mZoom;
-		
-
 	};
 }
+
 #endif

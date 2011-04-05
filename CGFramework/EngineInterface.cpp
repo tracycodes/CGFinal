@@ -30,8 +30,8 @@ void EngineInterface::Run()
 		mWindows.MessageHandler();
 
 		//Update Input Data Structures
-		//mWindows.PollKeyboard(mKeyboardState);
-		//mWindows.PollMouse(mMouseState);
+		mWindows.PollKeyboard(mKeyboardState);
+		mWindows.PollMouse(mMouseState);
 
 		//Update Phase
 		mTimer.Update();
@@ -59,15 +59,12 @@ void EngineInterface::UpdateEngine(float dt)
 {
 	//Temporary code. Usually used for debugging
 	//GetFullScreen();
-	//if(mKeyboardState.IsPressed(F1))
-	//{
+	std::stringstream st;
+	st << mMouseState.GetRelativePos().x << ", " << mMouseState.GetRelativePos().y;
+	mWindows.SetWindowTitle(st.str());
 
-		//mDXInit.ToggleFullscreen();
-		//mKeyboardState.Lock(F1);
-	//}
 
 	//Print the fps: TEMP
-	std::stringstream st;
-	st << mTimer.GetFps();// << "\tx:" << mMouseState.GetZoom() << "\ty:" << mMouseState.GetY();
+	//st << mTimer.GetFps();// << "\tx:" << mMouseState.GetZoom() << "\ty:" << mMouseState.GetY();
 	//mWindows.SetWindowTitle(st.str());
 }

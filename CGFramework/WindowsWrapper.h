@@ -51,8 +51,12 @@ namespace CGFramework
 		int	mFullWidth;
 		int mFullHeight;
 		std::string mTitle;
-		bool mKeyboard[256];
-		bool mMouse[3];
+
+		//Input Structures
+		bool mKeyboard[KeyboardState::NumKeys];
+		bool mMouse[MouseState::NumButtons];
+		int mMouseX;
+		int mMouseY;
 	};
 }
 
