@@ -1,8 +1,8 @@
 /***************************************************************************
 Author:     Tracy Steven Livengood
 Created:    Feb 06, 2009
-Updated:	Feb 06, 2009
-Program:	EmptyMath
+Updated:	Apr 06, 2011
+Program:	CGFramework
 Filename:   Vector2.h
 Purpose:	Vector2 math class
 ***************************************************************************/
@@ -13,7 +13,7 @@ Purpose:	Vector2 math class
 #include <cassert>
 #include <iostream>
 
-namespace EmptyMath
+namespace CGMath
 {
 	class Vector2
 	{
