@@ -173,9 +173,11 @@ void WindowsWrapper::PollKeyboard(KeyboardState& state)
 
 void WindowsWrapper::PollMouse(MouseState& state)
 {
+	int xPos = state.mScreenPosition.x;
+	int yPos = state.mScreenPosition.y;
+
+	state.Reset();
 	memcpy(state.mButtonPressed, mMouse, sizeof(mMouse));
-	state.mRelativePosition.SetX(mMouseX - state.mScreenPosition.x);
-	state.mRelativePosition.SetY(mMouseY - state.mScreenPosition.y);
-	state.mScreenPosition.SetX(mMouseX);
-	state.mScreenPosition.SetY(mMouseY);
+	state.mRelativePosition.Set(mMouseX - xPos, mMouseY - yPos);
+	state.mScreenPosition.Set(mMouseX, mMouseY);
 }

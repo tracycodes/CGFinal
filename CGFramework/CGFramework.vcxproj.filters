@@ -61,6 +61,9 @@
     <Filter Include="Renderer\Source">
       <UniqueIdentifier>{9bc106d6-5ba5-404d-aae6-4d16df70a78c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\Shaders">
+      <UniqueIdentifier>{e8c95f7b-e600-4aa3-aabb-48335196c51b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowsWrapper.cpp">
@@ -164,5 +167,16 @@
     <ClInclude Include="Point2.h">
       <Filter>Math\Header</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderTest.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shader Files\toon.frag">
+      <Filter>Content\Shaders</Filter>
+    </None>
+    <None Include="..\Shader Files\toon.vert">
+      <Filter>Content\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

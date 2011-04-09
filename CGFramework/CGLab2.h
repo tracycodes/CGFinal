@@ -1,10 +1,10 @@
 #ifndef CGLAB2_H
 #define CGLAB2_H
 
-#define GL_GLEXT_PROTOTYPES
+
+
+#include <GL/glew.h>
 #include "IApp.h"
-#include <gl/gl.h>
-#include <gl/glu.h>
 #include <cmath>
 
 #define PI 3.14159265
