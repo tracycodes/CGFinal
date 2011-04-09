@@ -4,7 +4,7 @@
 //Standard Includes
 #include <vector>
 
-namespace EmptyEngine
+namespace CGFramework
 {
 	class IndexBuffer
 	{

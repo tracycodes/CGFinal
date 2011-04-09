@@ -13,7 +13,7 @@ Purpose:	Vector2 math class
 #include <cassert>
 #include <iostream>
 
-namespace EmptyMath
+namespace CGFramework
 {
 	class Vector2
 	{

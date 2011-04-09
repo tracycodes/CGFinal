@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "Vector3.h"
 #include "Vector2.h"
+#include "VertexBuffer.h"
 
 using namespace CGMath;
 
@@ -32,8 +33,6 @@ namespace CGFramework
 	class ObjLoader
 	{
 	public:
-		ObjLoader(const LPDIRECT3DDEVICE9& device)
-			:mDevice(device){}
 		Mesh* Load(const std::string& filename)
 		{
 			std::ifstream in;
@@ -46,7 +45,6 @@ namespace CGFramework
 			Mesh* ret = new Mesh(filename);
 			SubMesh* group;
 			bool subComplete = false;
-			EmptyMath::AlignedBox bounds;
 
 			in.open(filename.c_str());
 
@@ -75,8 +73,6 @@ namespace CGFramework
 				{
 					in >> x >> y >> z;
 
-					//Scale the bounds box
-					bounds.Merge(x,y,z);
 
 					mVerts.push_back(Vector3(x,y,z));
 				}
@@ -135,9 +131,6 @@ namespace CGFramework
 			group = this->CreateSubMesh(groupName, matName);
 			this->Reset();
 			ret->AddSubmesh(group);
-			
-			//Set Bounds
-			ret->SetBounds(bounds);
 
 			//Clear out the data.
 			mVerts.clear();
@@ -161,15 +154,15 @@ namespace CGFramework
 			{
 				if(memcmp(&vert, &mVertices[temp->index], sizeof(Vertex)) == 0)
 				{
-					mIndices.push_back(temp->index);
+					mIndices->push_back(temp->index);
 					return; //Vertex exists, Add index and leave.
 				}
 				temp = temp->next;
 			}
 
 			//We need to add both the vert and index manually.
-			int index = mVertices.size(); //Size checked before adding so we don't need to -1
-			mVertices.push_back(vert);
+			int index = mVertices->size(); //Size checked before adding so we don't need to -1
+			mVertices->push_back(vert);
 			mIndices.push_back(index);
 
 			//Let our hash table know that we added a vertex
@@ -185,8 +178,8 @@ namespace CGFramework
 		}
 		SubMesh* CreateSubMesh(const std::string& subName, const std::string& matName)
 		{
-			VertexBuffer* vb = new VertexBuffer(mDevice, mVertices.size(), sizeof(VertexPNT));
-			IndexBuffer* ib = new IndexBuffer(mDevice, mIndices.size());
+			VertexBuffer* vb = new VertexBuffer(mVertices->size(), sizeof(Vertex));
+			IndexBuffer* ib = new IndexBuffer(mIndices->size());
 
 			vb->FillBuffer((void*)&mVertices[0]);
 			ib->FillBuffer((void*)&mIndices[0]);
@@ -195,8 +188,8 @@ namespace CGFramework
 		}
 		void Reset()
 		{
-			mVertices.clear();
-			mIndices.clear();
+			mVertices->clear();
+			mIndices->clear();
 			DeleteHash();
 			
 			//Note: We need to resize the table to store the verts/indices.
@@ -228,7 +221,6 @@ namespace CGFramework
 			mHashTable.clear();
 		}
 		//Raw Data
-		LPDIRECT3DDEVICE9 mDevice;
 		std::vector<Vector3> mVerts;
 		std::vector<Vector3> mNorms;
 		std::vector<Vector2> mCoords;
@@ -237,8 +229,8 @@ namespace CGFramework
 		std::vector<HashNode*> mHashTable;
 
 		//Formatted Data
-		std::vector<Vertex> mVertices;
-		std::vector<int> mIndices;
+		std::vector<Vertex>* mVertices;
+		std::vector<int>* mIndices;
 	};
 }
 #endif

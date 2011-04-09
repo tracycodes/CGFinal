@@ -13,8 +13,10 @@ namespace CGMath
 	is going to appear in. */
 	class Vertex
 	{
+	public:
 		Vertex(const Vector3& pos, const Vector3& norm, const Vector2& tex)
 			:pos(pos), norm(norm), tex(tex){}
+	private:
 
 		Vector3 pos;
 		Vector3 norm;

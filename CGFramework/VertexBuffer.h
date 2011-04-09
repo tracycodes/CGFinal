@@ -7,7 +7,7 @@
 //Math Includes
 #include "Vertex.h"
 
-namespace EmptyEngine
+namespace CGFramework
 {
 	class VertexBuffer
 	{
@@ -22,6 +22,7 @@ namespace EmptyEngine
 		const std::vector<Vertex>* GetBuffer() const {return mVerts;}
 		int GetNumVerts() const {return mNumVerts;}
 		int GetVertexSize() const {return mSize;}
+
 		~VertexBuffer()
 		{
 			delete mVerts;
