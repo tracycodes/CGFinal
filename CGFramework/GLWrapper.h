@@ -11,8 +11,7 @@ Purpose:	Initialize OpenGL with the IGraphics interface
 
 #include "Error.h"
 #include <Windows.h>
-#include <gl\gl.h>
-#include <gl\glu.h>
+#include <GL/glew.h>
 
 namespace CGFramework
 {

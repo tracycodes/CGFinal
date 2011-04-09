@@ -66,6 +66,24 @@ GLWrapper::GLWrapper(const HWND& hWnd): mHwnd(0), mPixelFormat(0)
 	{
 		SHOW_ERROR("Unable to set rendering and device context. OpenGL Initialize Failed.", __FILE__, __LINE__);
 	}
+	
+	//Initialize GLEW for all the extensions we may need
+	if(glewInit() != GLEW_OK)
+	{
+		SHOW_ERROR("GLEW was unable to be initialized. The DLL may be missing.", __FILE__, __LINE__);
+	}
+
+	//Check for vertex/fragment shader support
+	if(!GLEW_ARB_vertex_shader || !GLEW_ARB_fragment_shader)
+	{
+		SHOW_ERROR("GLEW is unable to support vertex or fragment shaders.", __FILE__,__LINE__);
+	}
+
+	//Check for GL 2.0 support
+	if(!glewIsSupported("GL_VERSION_2_0"))
+	{
+		SHOW_ERROR("GLEW was unable to find support for GL_VERSION_2_0. This Program requires at least 2.0 supprt", __FILE__, __LINE__);
+	}
 
 	//Clear Buffer to Gray
 	glClearColor(0.5f, 0.5f, 0.5f, 0.0f);	

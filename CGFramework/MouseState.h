@@ -58,12 +58,6 @@ namespace CGFramework
 		float GetY() const {return mRelativePosition.y;}
 		float GetZoom() const {return mZoom;}
 	private:
-		void IncScreenPos(float x, float y)
-		{
-			mScreenPosition.x += x;
-			mScreenPosition.y += y;
-		}
-
 		bool mButtonPressed[NumButtons];
 		bool mButtonLocked[NumButtons];
 		CGMath::Point2 mRelativePosition, mScreenPosition;
