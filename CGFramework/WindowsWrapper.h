@@ -36,6 +36,7 @@ namespace CGFramework
 		void PollMouse(MouseState& state);
 		HWND GetHandle(){return mHwnd;}
 		LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+		void Exit();
 		~WindowsWrapper(){DestroyWindow(mHwnd);}
 
 	private:

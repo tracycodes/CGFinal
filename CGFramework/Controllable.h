@@ -1,4 +1,4 @@
-#ifndef CONTROLLABLE_H
+ifndef CONTROLLABLE_H
 #define CONTROLLABLE_H
 
 class Controllable

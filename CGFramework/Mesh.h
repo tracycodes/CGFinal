@@ -1,51 +1,87 @@
 #ifndef MESH_H
 #define MESH_H
 
-//Engine Includes
-#include "SubMesh.h"
-
-//Math Includes
-#include "AlignedBox.h"
-#include "MathLibrary.h"
-
-//Standard Includes
+#include "Vertex.h"
+#include "Texture.h"
+#include "Shader.h"
+#include "Material.h"
 #include <string>
+#include <vector>
+#include "Matrix4.h"
 
 namespace CGFramework
 {
-	//Holds a group of submeshs - Representative of a mesh hierarchy
-	// (ie: A car mesh with many submeshs for doors/wheels etc.)
+	/** A single piece of renderable geometry. The smallest unit of geometry in the engine
+	 * any mesh can be rendered at any time. In a car 'Model' there would exist several
+	 * meshes. A tire may exist as a mesh - a single small, and definable piece of the car
+	 * with distinct properties. Meshes are made up of a list of vertexes, a list of indices,
+	 * and a material (shader/texture/lighting properties). 
+	 * [Read as groups of faces from wavefront object format]
+	 */
 	class Mesh
 	{
 	public:
-		typedef std::vector<SubMesh*> SubMeshes;
-		Mesh(const std::string& filename)
-			:mNumVerts(0), mNumTris(0){}
+		friend class ObjLoader;
+		Mesh()
+			:mMaterial(0){}
 
-		int GetNumVerts() const {return mNumVerts;}
-		int GetNumTris() const {return mNumTris;}
-		//EmptyMath::AlignedBox GetBounds() const {return mBounds;}
-		//void SetBounds(const EmptyMath::AlignedBox& in) {mBounds = in;}
-		void AddSubmesh(SubMesh* in)
+		//Texture* GetTexturePtr() const 
+		//{ return mMaterial->GetTexture(); }
+
+		//Shader* GetShaderPtr() const 
+		//{ return mMaterial->GetShader(); }
+
+		//Both of these methods have the potential to be unsafe, due to the assumption
+		//the the std::vector stores it's data contiguously in memory. It's not guaranteed
+		//by the standard, but it is guaranteed in most implementations. If this gives you
+		//an error you'll have to do it the long C style memory copy way. 
+		CGMath::Vertex* GetVertexArrayPtr()
+		{ return &(mVertices.front()); }
+
+		unsigned int* GetIndexArrayPtr()
+		{ return &(mIndices.front()); }
+
+		std::vector<CGMath::Vertex>* GetVertexPtr()
+		{ return &(mVertices);}
+
+		std::vector<unsigned int>* GetIndexPtr()
+		{ return &(mIndices);}
+
+		//unsigned int GetShaderID() const 
+		//{ return mMaterial->GetShader().GetID(); }
+
+		//unsigned int GetTextureID() const 
+		//{ return mMaterial->GetTexture().GetID(); }
+
+		void SetTransform(const CGMath::Matrix4 world)
 		{
-			mNumVerts += in->mNumVerts;
-			mNumTris += in->mNumTris;
-			mSubMeshes.push_back(in);
+			mWorld = world;
 		}
-		const SubMeshes& GetSubMeshes() const {return mSubMeshes;}
-
-		virtual ~Mesh()
+		CGMath::Matrix4 GetTransform() const
 		{
-			SubMeshes::iterator it = mSubMeshes.begin();
-			while(it != mSubMeshes.end())
-				delete *it++;
+			return mWorld;
 		}
 
+		int GetNumVerts() const 
+		{ return mVertices.size(); }
+
+		~Mesh()
+		{}
 	private:
-		SubMeshes mSubMeshes;
-		int mNumVerts;
-		int mNumTris;
-		//EmptyMath::AlignedBox mBounds;
+		void AddVertex(const CGMath::Vertex& v) 
+		{ mVertices.push_back(v); }
+
+		void AddIndex(const unsigned int& i) 
+		{ mIndices.push_back(i); }
+
+		//Model (the friend class) loads directly into these two vectors externally, 
+		//to avoid having to manually fill them with a memcpy or the like.
+		std::vector<CGMath::Vertex> mVertices;
+		std::vector<unsigned int> mIndices;
+		std::string mMeshName;
+		std::string mMaterialName;
+		Material* mMaterial;
+		CGMath::Matrix4 mWorld;
 	};
 }
 #endif

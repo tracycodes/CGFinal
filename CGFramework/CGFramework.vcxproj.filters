@@ -1,24 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="OpenGL/Windows">
-      <UniqueIdentifier>{7eb6ebc4-3139-4fbb-b0e0-057e7f929b1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGL/Windows\Header">
-      <UniqueIdentifier>{77da182a-8da7-4829-a844-e2aea0674e8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGL/Windows\Source">
-      <UniqueIdentifier>{62ed5baf-95a8-485b-bcdb-34d90e6ea7f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface">
-      <UniqueIdentifier>{03919a60-d6b7-4023-8099-317e6467b75a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\Header">
-      <UniqueIdentifier>{c4f6e9c1-b62f-4b7d-9fe4-5eb0f32a0b3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\Source">
-      <UniqueIdentifier>{0361f1cc-e736-457f-a4f9-2bfad4911fc5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utility">
       <UniqueIdentifier>{9a6ea12f-ebb5-49a9-91f2-4d8a8999ac84}</UniqueIdentifier>
     </Filter>
@@ -33,15 +15,6 @@
     </Filter>
     <Filter Include="Content">
       <UniqueIdentifier>{ddd31096-c30f-4cd9-ac2a-57a37ad7e2bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\ObjLoader">
-      <UniqueIdentifier>{e1c4c4f0-c76b-47d9-afc6-1afd8629738e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\ObjLoader\Header">
-      <UniqueIdentifier>{68b29198-ac67-422f-8832-86e09a1e829f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\ObjLoader\Source">
-      <UniqueIdentifier>{472853fb-9e40-492f-a56d-06b58a5c6daa}</UniqueIdentifier>
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{fb44c20c-7baf-4869-a0de-13908e7dda46}</UniqueIdentifier>
@@ -64,13 +37,28 @@
     <Filter Include="Content\Shaders">
       <UniqueIdentifier>{e8c95f7b-e600-4aa3-aabb-48335196c51b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{9bbc6468-2f1c-4f1f-87cf-5f0939c660c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Header">
+      <UniqueIdentifier>{e0a8bf84-69cd-4a1e-9f8e-62bf313f42c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Source">
+      <UniqueIdentifier>{cd54f66a-91de-4a15-ae44-86f037cd8613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{7eb6ebc4-3139-4fbb-b0e0-057e7f929b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Header">
+      <UniqueIdentifier>{77da182a-8da7-4829-a844-e2aea0674e8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Source">
+      <UniqueIdentifier>{62ed5baf-95a8-485b-bcdb-34d90e6ea7f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowsWrapper.cpp">
-      <Filter>OpenGL/Windows\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineInterface.cpp">
-      <Filter>Interface\Source</Filter>
+      <Filter>Windows\Source</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Utility\Source</Filter>
@@ -78,25 +66,22 @@
     <ClCompile Include="Main.cpp">
       <Filter>Application</Filter>
     </ClCompile>
-    <ClCompile Include="GLWrapper.cpp">
-      <Filter>OpenGL/Windows\Source</Filter>
+    <ClCompile Include="RenderBatch.cpp">
+      <Filter>Renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGraph.cpp">
+      <Filter>Scene\Header</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Renderer\Source</Filter>
     </ClCompile>
-    <ClCompile Include="RenderBatch.cpp">
-      <Filter>Renderer\Source</Filter>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowsWrapper.h">
-      <Filter>OpenGL/Windows\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="IApp.h">
-      <Filter>Interface\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineInterface.h">
-      <Filter>Interface\Header</Filter>
+      <Filter>Windows\Header</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Utility\Header</Filter>
@@ -104,14 +89,8 @@
     <ClInclude Include="CGLab2.h">
       <Filter>Application</Filter>
     </ClInclude>
-    <ClInclude Include="GLWrapper.h">
-      <Filter>OpenGL/Windows\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Error.h">
       <Filter>Utility\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjLoader.h">
-      <Filter>Content\ObjLoader\Header</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Math\Header</Filter>
@@ -125,37 +104,16 @@
     <ClInclude Include="Test.h">
       <Filter>Application</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Content\ObjLoader\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Submesh.h">
-      <Filter>Content\ObjLoader\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexBuffer.h">
-      <Filter>Content\ObjLoader\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="IndexBuffer.h">
-      <Filter>Content\ObjLoader\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>Math\Header</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
       <Filter>Math\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Renderer\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Renderable.h">
       <Filter>Renderer\Header</Filter>
     </ClInclude>
     <ClInclude Include="RenderBatch.h">
-      <Filter>Renderer\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Renderer\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllable.h">
       <Filter>Renderer\Header</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardState.h">
@@ -168,6 +126,60 @@
       <Filter>Math\Header</Filter>
     </ClInclude>
     <ClInclude Include="ShaderTest.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="CGLab3.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGraph.h">
+      <Filter>Scene\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Scene\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjLoader.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Scene\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>Scene\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeFormCamera.h">
+      <Filter>Scene\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IApp.h">
+      <Filter>Scene\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Render_test.h">
       <Filter>Application</Filter>
     </ClInclude>
   </ItemGroup>

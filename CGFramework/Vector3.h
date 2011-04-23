@@ -164,7 +164,7 @@ namespace CGMath
 			y = 0;
 			z = 0;
 		}
-		void Transform(const EmptyMath::Matrix4& trans);
+		void Transform(const CGMath::Matrix4& trans);
 		void Normalize()
 		{
 			float temp = this->Length();

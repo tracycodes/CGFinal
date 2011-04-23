@@ -181,3 +181,8 @@ void WindowsWrapper::PollMouse(MouseState& state)
 	state.mRelativePosition.Set(mMouseX - xPos, mMouseY - yPos);
 	state.mScreenPosition.Set(mMouseX, mMouseY);
 }
+void WindowsWrapper::Exit()
+{
+	//Close and relinquish resources
+	mRunning = false;
+}

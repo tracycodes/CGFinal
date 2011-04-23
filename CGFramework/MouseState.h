@@ -6,13 +6,16 @@
 
 namespace CGFramework
 {
-	enum Mouse
+	namespace Mouse
 	{
-		LEFT_CLICK = 0,
-		RIGHT_CLICK = 1,
-		MIDDLE_CLICK = 2,
-	};
-
+		enum MouseButtons
+		{
+			LEFT_CLICK = 0,
+			RIGHT_CLICK = 1,
+			MIDDLE_CLICK = 2,
+		};
+	}
+	using namespace Mouse;
 	class MouseState
 	{
 	public:
@@ -23,15 +26,15 @@ namespace CGFramework
 			Reset();
 			mScreenPosition.Set(0,0);
 		}
-		bool IsPressed(Mouse key) const
+		bool IsPressed(MouseButtons key) const
 		{
 			return mButtonPressed[key];
 		}
-		bool IsLocked(Mouse key) const
+		bool IsLocked(MouseButtons key) const
 		{
 			return mButtonLocked[key];
 		}
-		void Lock(Mouse key)
+		void Lock(MouseButtons key)
 		{
 			mButtonLocked[key] = true;
 		}

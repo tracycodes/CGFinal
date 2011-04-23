@@ -2,19 +2,16 @@
 
 <Material name ="BoxMaterial">
   <!--Choose a shader/tech that supports your semantics-->
-  <Effect name ="Cel" path ="Cel.fx"/>
-  <Technique name ="Toon"/>
-  <RenderType type ="TriangleList"/>
-  
+  <Shader type="fragment" name ="Cel" path ="toon.frag"/>
+  <Shader type="vertex" name="phong" path="toon.vert"/>
+
   <!--All needed texture objects of this mesh-->
   <TextureObjects>
     <Texture semantic ="Tex0"   path ="avatarTexture1.png"/>
   </TextureObjects>
   
-  <!--Any effect semantics that you want statically defined-->
-  <EffectData>
-    <Data semantic ="EdgeOff"   value =".0025"/>
-  </EffectData>
-  
-  <!--May add render states here-->
+  <!-- Specify Render states -->
+  <RenderStates>
+	<RenderType type ="TriangleList"/>
+  </RenderState>
 </Material>

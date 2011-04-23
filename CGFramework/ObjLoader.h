@@ -10,17 +10,13 @@
 #include "Mesh.h"
 #include "Vector3.h"
 #include "Vector2.h"
-#include "VertexBuffer.h"
+#include "Vertex.h"
+#include "Model.h"
 
 using namespace CGMath;
 
 namespace CGFramework
 {
-	struct FacePoint
-	{
-		int p,n,t;
-	};
-
 	//Used to build up the hash table for vertices
 	struct HashNode
 	{
@@ -33,89 +29,88 @@ namespace CGFramework
 	class ObjLoader
 	{
 	public:
-		Mesh* Load(const std::string& filename)
+		Model* Load(const std::string& filename)
 		{
-			std::ifstream in;
-			std::string line;
-			float x,y,z;	//For temp loading
+			//File Parsing Variables
+			std::ifstream inFile;
+			std::string nextString;
+			float x,y,z; //Used for temporary values
+			int v,vt,vn;
 
-			//Loaded data
-			std::string matName;
+			//Returned Object
+			Model* model = new Model(filename);
+			bool meshComplete = false;
+
+			//Current Mesh Data
+			Mesh* groupMesh = new Mesh();
+			std::string materialName;
 			std::string groupName;
-			Mesh* ret = new Mesh(filename);
-			SubMesh* group;
-			bool subComplete = false;
+			std::vector<CGMath::Vertex>& vertices = groupMesh->mVertices;
+			std::vector<unsigned int>& indices = groupMesh->mIndices;
 
-			in.open(filename.c_str());
-
-			while(in >> line)
+			inFile.open(filename);
+			while(inFile >> nextString)
 			{
-				if(strcmp(line.c_str(), "#") == 0); //ignore comments
+				if(nextString == "#"); //ignore comments
 
-				else if(strcmp(line.c_str(), "g") == 0)
+				else if(nextString == "g")
 				{
-					if(subComplete)
+					if(meshComplete)
 					{
 						if(mVerts.empty())
-							throw std::runtime_error("Error in EmptyEngine::ObjLoader. No Verts Loaded.");
-						group = this->CreateSubMesh(groupName, matName);
-						this->Reset();
-						ret->AddSubmesh(group);
+							throw std::runtime_error("Error while loading Model in Model.h, file contains no Vertexes");
+						groupMesh->mMeshName = groupName;
+						groupMesh->mMaterialName = materialName;
+						ResetHashTable();
+						model->AddMesh(groupMesh);
 					}
 					else
 					{
-						subComplete = !subComplete;
+						meshComplete = !meshComplete;
 					}
-					in >> groupName; //Group name
+					inFile >> groupName; //Group name
 					
 				}
-				else if(strcmp(line.c_str(), "v") == 0)
+				else if(nextString == "v")
 				{
-					in >> x >> y >> z;
-
-
+					inFile >> x >> y >> z;
 					mVerts.push_back(Vector3(x,y,z));
 				}
-				else if(strcmp(line.c_str(), "vt") == 0)
+				else if(nextString == "vt")
 				{
-					in >> x >> y;
-					y = -y;	//Had to invert the texture coordinate.
-					//x = -x;
+					inFile >> x >> y;
+					y = -y; //may be unneeded in gl	
 					mCoords.push_back(Vector2(x,y));
 				}
-				else if(strcmp(line.c_str(), "vn") == 0)
+				else if(nextString == "vn")
 				{
-					in >> x >> y >> z;
+					inFile >> x >> y >> z;
 					mNorms.push_back(Vector3(x,y,z));
 				}
-				else if(strcmp(line.c_str(), "f") == 0)
+				else if(nextString == "f")
 				{
 					for(int i = 0; i < 3; i++)
 					{
-						FacePoint point;
-						in >> point.p;
-
-						if(in.peek() == '/')
+						inFile >> v;
+						if(inFile.peek() == '/')
 						{
-							in.ignore();
-							if(in.peek() != '/')
-								in >> point.t;
-							if(in.peek() == '/')
+							inFile.ignore();
+							if(inFile.peek() != '/')
+								inFile >> vt;
+							if(inFile.peek() == '/')
 							{
-								in.ignore();
-								in >> point.n;
+								inFile.ignore();
+								inFile >> vn;
 							}
 						}
 						//Subtract one because .obj format starts at (1)
-						point.p -= 1;
-						point.t -= 1;
-						point.n -= 1;
-						AddPoint(point);
+						--v;--vt;--vn;
+						AddVertex(v,vt,vn, vertices, indices);
 					}
 				}
-				else if(strcmp(line.c_str(), "usemtl") == 0)
+				else if(nextString == "usemtl")
 				{
-					in >> matName; //Material.xml name
+					inFile >> materialName; //*.xml material name
 				}
 				else
 				{
@@ -127,48 +122,49 @@ namespace CGFramework
 			//Create the final submesh: This can either be an edge case or the first Submesh created.
 			//for non-group .objs
 			if(mVerts.empty())
-				throw std::runtime_error("Error in EmptyEngine::ObjLoader. No Verts Loaded.");
-			group = this->CreateSubMesh(groupName, matName);
-			this->Reset();
-			ret->AddSubmesh(group);
+					throw std::runtime_error("Error while loading Model in Model.h, file contains no Vertexes");
+			groupMesh->mMeshName = groupName;
+			groupMesh->mMaterialName = materialName;
+			ResetHashTable();
+			model->AddMesh(groupMesh);
 
-			//Clear out the data.
+			//Clear out the data for reuse
 			mVerts.clear();
 			mCoords.clear();
 			mNorms.clear();
 
-			return ret;
+			return model;
 		}
 	private:
 		//Adds a point to the vert / index buffer
-		void AddPoint(const FacePoint& in)
+		void AddVertex(int v, int vt, int vn, std::vector<CGMath::Vertex>& verts, std::vector<unsigned int>& indices)
 		{
 			//Resize the HashTable if needed. Note: Resize value initializes (in this case to NULL).
-			if(mHashTable.capacity() <= (unsigned int)in.p)
-				mHashTable.resize(in.p*2+1);
+			if(mHashTable.capacity() <= (unsigned int)v)
+				mHashTable.resize(v*2+1);
 			
 			//Create the vertex
-			Vertex vert(mVerts[in.p], mNorms[in.n], mCoords[in.t]);
-			HashNode* temp = mHashTable[in.p];
+			Vertex vert(mVerts[v], mNorms[vn], mCoords[vt]);
+			HashNode* temp = mHashTable[v];
 			while(temp != 0)
 			{
-				if(memcmp(&vert, &mVertices[temp->index], sizeof(Vertex)) == 0)
+				if(memcmp(&vert, &verts[temp->index], sizeof(Vertex)) == 0)
 				{
-					mIndices->push_back(temp->index);
+					indices.push_back(temp->index);
 					return; //Vertex exists, Add index and leave.
 				}
 				temp = temp->next;
 			}
 
 			//We need to add both the vert and index manually.
-			int index = mVertices->size(); //Size checked before adding so we don't need to -1
-			mVertices->push_back(vert);
-			mIndices.push_back(index);
+			int index = verts.size(); //Size checked before adding so we don't need to -1
+			verts.push_back(vert);
+			indices.push_back(index);
 
 			//Let our hash table know that we added a vertex
-			temp = mHashTable[in.p];
+			temp = mHashTable[v];
 			if(temp == 0)
-				mHashTable[in.p] = new HashNode(index);
+				mHashTable[v] = new HashNode(index);
 			else
 			{
 				while(temp->next != 0)
@@ -176,20 +172,8 @@ namespace CGFramework
 				temp->next = new HashNode(index);
 			}
 		}
-		SubMesh* CreateSubMesh(const std::string& subName, const std::string& matName)
+		void ResetHashTable()
 		{
-			VertexBuffer* vb = new VertexBuffer(mVertices->size(), sizeof(Vertex));
-			IndexBuffer* ib = new IndexBuffer(mIndices->size());
-
-			vb->FillBuffer((void*)&mVertices[0]);
-			ib->FillBuffer((void*)&mIndices[0]);
-
-			return new SubMesh(vb, ib, subName, matName);
-		}
-		void Reset()
-		{
-			mVertices->clear();
-			mIndices->clear();
 			DeleteHash();
 			
 			//Note: We need to resize the table to store the verts/indices.
@@ -227,10 +211,6 @@ namespace CGFramework
 		
 		//Hash Table for vertices
 		std::vector<HashNode*> mHashTable;
-
-		//Formatted Data
-		std::vector<Vertex>* mVertices;
-		std::vector<int>* mIndices;
 	};
 }
 #endif

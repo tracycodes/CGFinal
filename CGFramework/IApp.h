@@ -14,12 +14,13 @@ namespace CGFramework
 	class IApp
 	{
 	public:
-		IApp(){}
+		IApp(SceneManager* scene)
+			:Scene(scene){}
 		virtual void Initialize() = 0;
 		virtual void Update(float dt) = 0;
-		virtual void Render(float dt) = 0;
 		virtual ~IApp(){};
 	protected:
+		SceneManager* Scene;
 	};
 }
 #endif

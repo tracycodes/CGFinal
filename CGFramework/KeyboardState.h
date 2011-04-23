@@ -1,6 +1,8 @@
 #ifndef KEYBOARDSTATE_H
 #define KEYBOARDSTATE_H
 
+#include "Windows.h"
+
 namespace CGFramework
 {
 	enum Keyboard	//LONG CHARACTER SET! : This maps over the win32 character (ascii) set

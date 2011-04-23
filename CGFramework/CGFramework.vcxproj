@@ -39,6 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)Third Party\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)Third Party\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,7 +56,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,41 +77,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EngineInterface.cpp" />
-    <ClCompile Include="GLWrapper.cpp" />
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="RenderBatch.cpp" />
+    <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WindowsWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGLab2.h" />
-    <ClInclude Include="Controllable.h" />
-    <ClInclude Include="EngineInterface.h" />
+    <ClInclude Include="CGLab3.h" />
     <ClInclude Include="Error.h" />
-    <ClInclude Include="GLWrapper.h" />
+    <ClInclude Include="FreeFormCamera.h" />
+    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="IApp.h" />
-    <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="KeyboardState.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="MouseState.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="Point2.h" />
     <ClInclude Include="Point3.h" />
     <ClInclude Include="Renderable.h" />
-    <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderBatch.h" />
+    <ClInclude Include="Render_test.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderTest.h" />
-    <ClInclude Include="Submesh.h" />
     <ClInclude Include="Test.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vertex.h" />
-    <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="WindowsWrapper.h" />
   </ItemGroup>
   <ItemGroup>
