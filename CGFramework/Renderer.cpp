@@ -29,7 +29,7 @@ Renderer::Renderer(const HWND& hWnd): mHwnd(0), mPixelFormat(0)
 		PFD_SUPPORT_OPENGL |						
 		PFD_DOUBLEBUFFER,					
 		PFD_TYPE_RGBA,							
-		16,								
+		24,								
 		0, 0, 0, 0, 0, 0,						
 		0,								
 		0,								
@@ -89,7 +89,7 @@ Renderer::Renderer(const HWND& hWnd): mHwnd(0), mPixelFormat(0)
 	glClearColor(0.5f, 0.5f, 0.5f, 0.0f);	
 
 	//Sets Color Blending 
-	glShadeModel(GL_SMOOTH);
+	//glShadeModel(GL_SMOOTH);
 
 	//Enables Depth Buffer
 	glClearDepth(1.0f);							
@@ -104,10 +104,11 @@ Renderer::Renderer(const HWND& hWnd): mHwnd(0), mPixelFormat(0)
 	//GlHints enable certain aspects allowing better visuals or better performance
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-	//Enable Vertex Arrays
+	//Enable GL Rendering States
 	glEnableClientState(GL_VERTEX_ARRAY);
-
-
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnable(GL_TEXTURE_2D);
 }
 void Renderer::StartRender()
 {
@@ -141,54 +142,64 @@ void Renderer::Render(RenderBatch* batch)
 	//if they have the same material/texture/shader 
 	while(it != renderList.end())
 	{
-				
-		
-
 		int numPrims = (*it)->GetIndexPtr()->size() /3;
 		//Add this with materials
 		int renderType = GL_TRIANGLES;
-		/*switch(renderType)
-		{
-			case PointList:
-				numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts());
-				break;
-			case LineList:
-				numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) /2;
-				break;
-			case LineStrip:
-				numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) -1;
-				break;
-			case TriangleList:
-				numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) /3;
-				break;
-			case TriangleStrip:
-				numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) -2;
-				break;
-			case TriangleFan:
-				numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) -2;
-		}
-		/*unsigned int indexbuffer;
-		glGenBuffers(1, &indexbuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 
-			         (sizeof(int)) * (*it)->GetIndexPtr()->size(),
-					 (*it)->GetIndexArrayPtr(),
-					 GL_STATIC_DRAW);
+		//switch(renderType)
+		//{
+		//	case PointList:
+		//		numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts());
+		//		break;
+		//	case LineList:
+		//		numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) /2;
+		//		break;
+		//	case LineStrip:
+		//		numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) -1;
+		//		break;
+		//	case TriangleList:
+		//		numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) /3;
+		//		break;
+		//	case TriangleStrip:
+		//		numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) -2;
+		//		break;
+		//	case TriangleFan:
+		//		numPrims = ((*it)->HasIndices() ? mesh->GetNumIndices() : mesh->GetNumVerts()) -2;
+		//}
+		//unsigned int indexbuffer;
+		//glGenBuffers(1, &indexbuffer);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbuffer);
+		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, 
+		//	         (sizeof(int)) * (*it)->GetIndexPtr()->size(),
+		//			 (*it)->GetIndexArrayPtr(),
+		//			 GL_STATIC_DRAW);
+		//
+		//unsigned int vertbuffer;
+		//glGenBuffers(1, &vertbuffer);
+		//glBindBuffer(GL_ARRAY_BUFFER, vertbuffer);
+		//glBufferData(GL_ARRAY_BUFFER,
 		
-		unsigned int vertbuffer;
-		glGenBuffers(1, &vertbuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertbuffer);
-		glBufferData(GL_ARRAY_BUFFER,*/
-		
-		glPointSize(5);
-		glVertexPointer(3, GL_FLOAT, 8*sizeof(float), (*it)->GetVertexArrayPtr());
+		glColor3f(1,1,1);
+		glBindTexture(GL_TEXTURE_2D, (*it)->mMaterial->GetTexture());
+		//glInterleavedArrays(GL_T2F_N3F_V3F, 0, (*it)->GetVertexArrayPtr());
+		glTexCoordPointer(2, GL_FLOAT,8*sizeof(float),(*it)->GetVertexArrayPtr());
+		glNormalPointer(GL_FLOAT, 8*sizeof(float),((float*)(*it)->GetVertexArrayPtr())+2);
+		glVertexPointer(3, GL_FLOAT, 8*sizeof(float),((float*)(*it)->GetVertexArrayPtr())+5);
 		glDrawElements(GL_TRIANGLES,
 					   (*it)->GetIndexPtr()->size(),
 					   GL_UNSIGNED_INT,
 					   (*it)->GetIndexArrayPtr());
 		it++;
 	}
+	//Debugging Textures
+	glBindTexture(GL_TEXTURE_2D, 1);
+	glBegin(GL_TRIANGLE_STRIP);
+		glTexCoord2f(1,0); glVertex3f(2,-2,-2);
+		glTexCoord2f(0,0); glVertex3f(-2,-2,-2);
+		glTexCoord2f(1,1); glVertex3f(2,-2,2);
+		glTexCoord2f(0,1); glVertex3f(-2,-2,2);
+	glEnd();
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	// Debugging Axis System
 	glBegin(GL_LINES);
 			glColor3f(1,0,0); // Red x-axis

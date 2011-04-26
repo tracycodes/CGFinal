@@ -55,6 +55,9 @@
     <Filter Include="Windows\Source">
       <UniqueIdentifier>{62ed5baf-95a8-485b-bcdb-34d90e6ea7f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\XML Loader">
+      <UniqueIdentifier>{d816c0d4-3055-49f2-8747-1be9d307347e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowsWrapper.cpp">
@@ -77,6 +80,18 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scene\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlElement.cpp">
+      <Filter>Content\XML Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlMacros.cpp">
+      <Filter>Content\XML Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlReader.cpp">
+      <Filter>Content\XML Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlWriter.cpp">
+      <Filter>Content\XML Loader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +196,18 @@
     </ClInclude>
     <ClInclude Include="Render_test.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlElement.h">
+      <Filter>Content\XML Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlMacros.h">
+      <Filter>Content\XML Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlReader.h">
+      <Filter>Content\XML Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlWriter.h">
+      <Filter>Content\XML Loader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

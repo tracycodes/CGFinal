@@ -3,6 +3,7 @@
 
 #include "IApp.h"
 #include "Geometry.h"
+#include "Material.h"
 
 namespace CGFramework
 {
@@ -15,8 +16,10 @@ namespace CGFramework
 		}
 		void Initialize()
 		{
-			Model* m = Scene->Load<Model>("../Obj Files/cup.obj");
+			Scene->SetRelativePath("../Obj Files/");
+			Model* m = Scene->Load<Model>("cubeTemp.obj");
 			Geometry* g = new Geometry(Scene->GetSceneGraph()->GetRoot());
+
 			g->SetMeshes(*m->GetMeshes());
 			Scene->GetSceneGraph()->GetRoot()->InsertNode(g);
 		}

@@ -18,6 +18,7 @@ namespace CGFramework
 	{
 	public:
 		SceneManager(const std::string& title, HINSTANCE hInst, int width, int height);
+		void SetRelativePath(const std::string& path);
 		void SetApplication(IApp* app);
 		KeyboardState* GetKeyboardPtr(){return &mKeyboardState;}
 		MouseState* GetMousePtr(){return &mMouseState;}

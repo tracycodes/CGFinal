@@ -31,25 +31,33 @@ namespace CGFramework
 			FIBITMAP* imageContainer = FreeImage_Load(imageFormat, filename.c_str());
 			if(!imageContainer)
 				throw new std::exception("Image failed to load by (Texture.h)");
-			BYTE* texels = FreeImage_GetBits(imageContainer);
+
 			mWidth = FreeImage_GetWidth(imageContainer);
 			mHeight = FreeImage_GetHeight(imageContainer);
 			
 			//Store that shit! (in video memory)
 			glGenTextures(1, &mTextureID);
-			//glBindTexture(GL_TEXTURE_2D, mTextureID);
-			glTexImage2D(GL_TEXTURE_2D, //Target
-								     0, //Level of detail (Should be custom)
-							    GL_RGB, //Internal Format (Should be custom)
-							    mWidth, 
-							   mHeight,
-							         0, //Border width
-							    GL_RGB, //Pixel Format (Should be custom)
-					  GL_UNSIGNED_BYTE, //Datatype of pixels
-					            texels);
+			glBindTexture(GL_TEXTURE_2D, mTextureID);
+			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexImage2D(GL_TEXTURE_2D,      //Target
+						 0,                  //Level of detail (Should be custom)
+						 GL_RGB,             //Internal Format (Should be custom)
+						 mWidth, 
+						 mHeight,
+						 0,                  //Border width
+						 GL_BGR,             //Pixel Format (Should be custom)
+					     GL_UNSIGNED_BYTE,   //Datatype of pixels
+	                     FreeImage_GetBits(imageContainer));
 
 			//Free the local memory, no longer needed. Texture is resident.
 			FreeImage_Unload(imageContainer);
+		}
+		unsigned int GetTextureID() const
+		{
+			return mTextureID;
 		}
 		~Texture()
 		{

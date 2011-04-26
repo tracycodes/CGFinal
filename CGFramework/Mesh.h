@@ -22,14 +22,15 @@ namespace CGFramework
 	{
 	public:
 		friend class ObjLoader;
+		friend class Renderer;
 		Mesh()
 			:mMaterial(0){}
 
-		//Texture* GetTexturePtr() const 
-		//{ return mMaterial->GetTexture(); }
+		int GetTextureID() const 
+		{ return mMaterial->GetTexture(); }
 
-		//Shader* GetShaderPtr() const 
-		//{ return mMaterial->GetShader(); }
+		int GetShaderID() const 
+		{ return mMaterial->GetShaderProgram(); }
 
 		//Both of these methods have the potential to be unsafe, due to the assumption
 		//the the std::vector stores it's data contiguously in memory. It's not guaranteed
@@ -47,15 +48,17 @@ namespace CGFramework
 		std::vector<unsigned int>* GetIndexPtr()
 		{ return &(mIndices);}
 
-		//unsigned int GetShaderID() const 
-		//{ return mMaterial->GetShader().GetID(); }
-
-		//unsigned int GetTextureID() const 
-		//{ return mMaterial->GetTexture().GetID(); }
-
 		void SetTransform(const CGMath::Matrix4 world)
 		{
 			mWorld = world;
+		}
+		void SetMaterial(Material* in)
+		{
+			mMaterial = in;
+		}
+		std::string GetMaterialName()
+		{
+			return mMaterialName;
 		}
 		CGMath::Matrix4 GetTransform() const
 		{

@@ -16,11 +16,10 @@ namespace CGMath
 	public:
 		Vertex(const Vector3& pos, const Vector3& norm, const Vector2& tex)
 			:pos(pos), norm(norm), tex(tex){}
-	private:
-
-		Vector3 pos;
-		Vector3 norm;
+	public:
 		Vector2 tex;
+		Vector3 norm;
+		Vector3 pos;
 	};
 }
 

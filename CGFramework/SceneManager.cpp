@@ -13,6 +13,10 @@ void SceneManager::SetApplication(IApp* app)
 	mApp = app;
 	mApp->Initialize();
 }
+void SceneManager::SetRelativePath(const std::string& path)
+{
+	mResourceManager.SetRelativePath(path);
+}
 SceneGraph* SceneManager::GetSceneGraph()
 {
 	return &mSceneGraph;

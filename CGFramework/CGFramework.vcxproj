@@ -39,8 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Third Party\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)Third Party\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Third Party\libxml\include;$(ProjectDir)Third Party\FreeImage;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)Third Party\libxml\lib;$(ProjectDir)Third Party\FreeImage;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -57,6 +57,9 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -84,6 +87,10 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WindowsWrapper.cpp" />
+    <ClCompile Include="XmlElement.cpp" />
+    <ClCompile Include="XmlMacros.cpp" />
+    <ClCompile Include="XmlReader.cpp" />
+    <ClCompile Include="XmlWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -120,6 +127,10 @@
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="WindowsWrapper.h" />
+    <ClInclude Include="XmlElement.h" />
+    <ClInclude Include="XmlMacros.h" />
+    <ClInclude Include="XmlReader.h" />
+    <ClInclude Include="XmlWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shader Files\toon.frag" />

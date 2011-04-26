@@ -79,7 +79,7 @@ namespace CGFramework
 				else if(nextString == "vt")
 				{
 					inFile >> x >> y;
-					y = -y; //may be unneeded in gl	
+					//y = -y; //may be unneeded in gl	
 					mCoords.push_back(Vector2(x,y));
 				}
 				else if(nextString == "vn")
