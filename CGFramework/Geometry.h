@@ -8,30 +8,21 @@ namespace CGFramework
 	class Geometry: public Node
 	{
 	public:
-		Geometry(Node* parent)
-			:Node(parent)
+		Geometry(Node* parent, Mesh* mesh)
+			:Node(parent), mMesh(mesh)
 		{
-		}
-		void SetMeshes(const std::vector<Mesh*>& meshes)
-		{
-			for(std::vector<Mesh*>::const_iterator it = meshes.begin(); it != meshes.end(); it++)
-				mMeshes.push_back(*it);
 		}
 		virtual void PrepareForRender(RenderBatch* batch)
 		{
-			for(std::vector<Mesh*>::iterator it = mMeshes.begin(); it != mMeshes.end(); it++)
-			{
-				(*it)->SetTransform(mWorld);
-				batch->AddMesh(*it);
-			}
-
+			batch->AddMesh(mMesh, &mWorld);
 			Node::PrepareForRender(batch);
 		}
 		~Geometry()
 		{
+			//mMesh is cleaned up by the ResourceManager
 		}
 	private:
-		std::vector<Mesh*> mMeshes;
+		Mesh* mMesh;
 	};
 }
 

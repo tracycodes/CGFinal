@@ -5,8 +5,8 @@
 #ifndef RENDERBATCH_H
 #define RENDERBATCH_H
 
-#include "Renderable.h"
-#include <vector>
+#include "Matrix4.h"
+#include <list>
 
 namespace CGFramework
 {
@@ -20,11 +20,13 @@ namespace CGFramework
 			:mCamera(0){}
 		void Clear()
 		{
-			mRenderList.clear();
+			mMeshList.clear();
+			mTransformList.clear();
 		}
-		void AddMesh(Mesh* in)
+		void AddMesh(Mesh* in, CGMath::Matrix4* trans)
 		{
-			mRenderList.push_back(in);
+			mMeshList.push_back(in);
+			mTransformList.push_back(trans);
 		}
 		void SetCamera(Camera* in)
 		{
@@ -38,7 +40,8 @@ namespace CGFramework
 		{
 		}
 	private:
-		std::vector<Mesh*> mRenderList;
+		std::list<Mesh*> mMeshList;
+		std::list<CGMath::Matrix4*> mTransformList;
 		Camera* mCamera;
 	};
 }

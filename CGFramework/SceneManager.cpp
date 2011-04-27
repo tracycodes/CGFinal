@@ -64,11 +64,11 @@ void SceneManager::UpdateEngine(float dt)
 	//Temporary code. Usually used for debugging
 	//GetFullScreen();
 	std::stringstream st;
-	st << mMouseState.GetRelativePos().x << ", " << mMouseState.GetRelativePos().y;
-	mWindows.SetWindowTitle(st.str());
+	//st << mMouseState.GetRelativePos().x << ", " << mMouseState.GetRelativePos().y;
+	//mWindows.SetWindowTitle(st.str());
 
 
 	//Print the fps: TEMP
-	//st << mTimer.GetFps();// << "\tx:" << mMouseState.GetZoom() << "\ty:" << mMouseState.GetY();
-	//mWindows.SetWindowTitle(st.str());
+	st << mTimer.GetFps();// << "\tx:" << mMouseState.GetZoom() << "\ty:" << mMouseState.GetY();
+	mWindows.SetWindowTitle(st.str());
 }

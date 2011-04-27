@@ -34,9 +34,6 @@
     <Filter Include="Renderer\Source">
       <UniqueIdentifier>{9bc106d6-5ba5-404d-aae6-4d16df70a78c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Content\Shaders">
-      <UniqueIdentifier>{e8c95f7b-e600-4aa3-aabb-48335196c51b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{9bbc6468-2f1c-4f1f-87cf-5f0939c660c6}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,12 @@
     </Filter>
     <Filter Include="Content\XML Loader">
       <UniqueIdentifier>{d816c0d4-3055-49f2-8747-1be9d307347e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Files">
+      <UniqueIdentifier>{7bc33aa1-2892-49b6-8fb4-b69bbac71c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Files\Shaders">
+      <UniqueIdentifier>{e8c95f7b-e600-4aa3-aabb-48335196c51b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -212,10 +215,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shader Files\toon.frag">
-      <Filter>Content\Shaders</Filter>
+      <Filter>Content\Files\Shaders</Filter>
     </None>
     <None Include="..\Shader Files\toon.vert">
-      <Filter>Content\Shaders</Filter>
+      <Filter>Content\Files\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

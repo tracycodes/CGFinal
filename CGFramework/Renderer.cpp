@@ -119,19 +119,18 @@ void Renderer::StartRender()
 }
 void Renderer::Render(RenderBatch* batch)
 {
-	const std::vector<Mesh*>& renderList = batch->mRenderList;
-	std::vector<Mesh*>::const_iterator it = renderList.begin();
+	//Set up variables to make this easier
+	const std::list<Mesh*>& meshList = batch->mMeshList;
+	const std::list<CGMath::Matrix4*>& transformList = batch->mTransformList;
+
+	std::list<Mesh*>::const_iterator meshIt = meshList.begin();
+	std::list<CGMath::Matrix4*>::const_iterator transIt = transformList.begin();
+
 	const Camera& camera = batch->GetCamera();
 	
 	//******** TEMP CAMERA CODE
 	static float theta = 0;
 	theta += (3.14159265/8)*(1.0/60);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(5*sin(theta),5,5*cos(theta),0,0,0,0,1,0);
-	//glLoadMatrix(((*it)->GetTransform() * camera.GetTransform()).GetArray());
-
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//glLoadMatrix(camera.GetProjectionMatrix().GetArray());
@@ -140,11 +139,31 @@ void Renderer::Render(RenderBatch* batch)
 
 	//Note we can make this quicker by combining meshes to reduce draw calls
 	//if they have the same material/texture/shader 
-	while(it != renderList.end())
+	while(meshIt != meshList.end())
 	{
-		int numPrims = (*it)->GetIndexPtr()->size() /3;
-		//Add this with materials
+		int numPrims = (*meshIt)->GetIndexPtr()->size() /3;
 		int renderType = GL_TRIANGLES;
+
+		CGMath::Matrix4 t(**transIt);
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		gluLookAt(25*sin(theta),5,25*cos(theta),0,0,0,0,1,0);
+
+		glPushMatrix();
+		glMultTransposeMatrixf(t.GetArrayPtr());
+		glColor3f(1,1,1);
+		glBindTexture(GL_TEXTURE_2D, (*meshIt)->mMaterial->GetTexture());
+		glTexCoordPointer(2, GL_FLOAT,8*sizeof(float),(*meshIt)->GetVertexArrayPtr());
+		glNormalPointer(GL_FLOAT, 8*sizeof(float),((float*)(*meshIt)->GetVertexArrayPtr())+2);
+		glVertexPointer(3, GL_FLOAT, 8*sizeof(float),((float*)(*meshIt)->GetVertexArrayPtr())+5);
+		glDrawElements(GL_TRIANGLES,
+					   (*meshIt)->GetIndexPtr()->size(),
+					   GL_UNSIGNED_INT,
+					   (*meshIt)->GetIndexArrayPtr());
+		glPopMatrix();
+		meshIt++; transIt++;
+
 		//switch(renderType)
 		//{
 		//	case PointList:
@@ -177,30 +196,10 @@ void Renderer::Render(RenderBatch* batch)
 		//glGenBuffers(1, &vertbuffer);
 		//glBindBuffer(GL_ARRAY_BUFFER, vertbuffer);
 		//glBufferData(GL_ARRAY_BUFFER,
-		
-		glColor3f(1,1,1);
-		glBindTexture(GL_TEXTURE_2D, (*it)->mMaterial->GetTexture());
-		//glInterleavedArrays(GL_T2F_N3F_V3F, 0, (*it)->GetVertexArrayPtr());
-		glTexCoordPointer(2, GL_FLOAT,8*sizeof(float),(*it)->GetVertexArrayPtr());
-		glNormalPointer(GL_FLOAT, 8*sizeof(float),((float*)(*it)->GetVertexArrayPtr())+2);
-		glVertexPointer(3, GL_FLOAT, 8*sizeof(float),((float*)(*it)->GetVertexArrayPtr())+5);
-		glDrawElements(GL_TRIANGLES,
-					   (*it)->GetIndexPtr()->size(),
-					   GL_UNSIGNED_INT,
-					   (*it)->GetIndexArrayPtr());
-		it++;
 	}
-	//Debugging Textures
-	glBindTexture(GL_TEXTURE_2D, 1);
-	glBegin(GL_TRIANGLE_STRIP);
-		glTexCoord2f(1,0); glVertex3f(2,-2,-2);
-		glTexCoord2f(0,0); glVertex3f(-2,-2,-2);
-		glTexCoord2f(1,1); glVertex3f(2,-2,2);
-		glTexCoord2f(0,1); glVertex3f(-2,-2,2);
-	glEnd();
 
-	glBindTexture(GL_TEXTURE_2D, 0);
 	// Debugging Axis System
+	glBindTexture(GL_TEXTURE_2D, 0); //Clear Texture binding 
 	glBegin(GL_LINES);
 			glColor3f(1,0,0); // Red x-axis
 			glVertex3f(0.0, 0.0, 0.0);

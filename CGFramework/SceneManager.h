@@ -9,6 +9,7 @@
 #include "SceneGraph.h"
 #include "RenderBatch.h"
 #include "ResourceManager.h"
+#include "Geometry.h"
 #include <string>
 
 namespace CGFramework
@@ -23,11 +24,28 @@ namespace CGFramework
 		KeyboardState* GetKeyboardPtr(){return &mKeyboardState;}
 		MouseState* GetMousePtr(){return &mMouseState;}
 		SceneGraph* GetSceneGraph();
+
+		// Interface for loading arbitrary resources, only loads and returns the resource.
 		template<typename T>
 		T* Load(const std::string& filename)
 		{
 			return mResourceManager.Load<T>(filename);
 		}
+		// Load and Insert a collection of nodes representative of a model.
+		Node* InsertModel(const std::string& filename)
+		{
+			Model* resource = mResourceManager.Load<Model>(filename);
+			std::vector<Mesh*>* meshes = resource->GetMeshes();
+			Node* parent = mSceneGraph.GetRoot()->CreateNode();
+			for(std::vector<Mesh*>::iterator it = meshes->begin(); it != meshes->end(); it++)
+				parent->InsertNode(new Geometry(parent, *it));
+			return parent;
+		}
+		/*template<typename T>
+		T* Load(const std::string& file1, const std::string& file2)
+		{
+			return mResourceManager.Load<T>(file1, file2);
+		}*/
 		void Run();
 		void Release();
 		~SceneManager();

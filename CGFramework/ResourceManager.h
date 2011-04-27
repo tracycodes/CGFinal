@@ -10,6 +10,7 @@
 #include "XmlReader.h"
 #include "XmlElement.h"
 #include <sstream>
+#include "Error.h"
 
 namespace CGFramework
 {
@@ -26,25 +27,21 @@ namespace CGFramework
 		template<typename T>
 		T* Load(const std::string& filename)
 		{
-			T* resource;
-			ResourceMap::iterator it = mResources.find(filename);
-			if(it != mResources.end())
-			{
-				if((resource = dynamic_cast<T*>(it->second)))
-					return resource;
-				else
-					throw std::runtime_error("Requested type does not match the resource type! (in ResourceManager.h)");
-			}
-
-			resource = new T(mRelativePathToResources + filename);
-			mResources.insert(std::make_pair(filename, resource));
-			return resource;
+			SHOW_ERROR("The ResouceManager cannot load the specified resource type, as it does not exist, or is not supported.", __FILE__, __LINE__);
 		}
+		/*template<typename T>
+		T* Load(const std::string& vertName, const std::string& fragName)
+		{
+			SHOW_ERROR("The ResouceManager cannot load the specified resource type, as it does not exist, or is not supported.", __FILE__, __LINE__);
+		}*/
+
 		/* Specilized load functions. These functions either have a complicated load process that is simply too much
 		   work to contain in the TYPE class constructor or they require other modules to be loaded simultaneously.
 		*/
 		template<> Model* Load<Model>(const std::string& filename);
 		template<> Material* Load<Material>(const std::string& filename);
+		template<> Texture* Load<Texture>(const std::string& filename);
+		//template<> Shader* Load<Shader>(const std::string& vertName, const std::string& fragName);
 
 		template<typename T>
 		T* Find(const std::string& filename)
@@ -66,6 +63,43 @@ namespace CGFramework
 	};
 
 	template<>
+	Texture* ResourceManager::Load<Texture>(const std::string& filename)
+	{
+		Texture* resource;
+		ResourceMap::iterator it = mResources.find(filename);
+		if(it != mResources.end())
+		{
+			if(resource = dynamic_cast<Texture*>(it->second))
+				return resource;
+			else
+				throw std::runtime_error("Requested type does not match the resource type! (in ResourceManager.h)");
+		}
+
+		resource = new Texture(mRelativePathToResources + filename);
+		mResources.insert(std::make_pair(filename, resource));
+		return resource;
+	}
+
+	/*template<>
+	Shader* ResourceManager::Load<Shader>(const std::string& vertName, const std::string& fragName)
+	{
+		Shader* resource;
+		ResourceMap::iterator it = mResources.find(vertName);
+		if(it != mResources.end())
+		{
+			if((resource = dynamic_cast<Shader*>(it->second)))
+				return resource;
+			else
+				throw std::runtime_error("Requested type does not match the resource type! (in ResourceManager.h)");
+		}
+
+		resource = new Shader(mRelativePathToResources + vertName, mRelativePathToResources + fragName);
+		mResources.insert(std::make_pair(vertName, resource));
+		return resource;
+
+	}*/
+
+	template<>
 	Model* ResourceManager::Load<Model>(const std::string& filename)
 	{
 		//Ensure that we haven't already loaded this model.
@@ -73,7 +107,7 @@ namespace CGFramework
 		ResourceMap::iterator it = mResources.find(filename);
 		if(it != mResources.end())
 		{
-			if(!(resource = dynamic_cast<Model*>(it->second)))
+			if(resource = dynamic_cast<Model*>(it->second))
 				return resource;
 			else
 				throw std::runtime_error("Requested type does not match the resource type! (in ResourceManager.h)");
@@ -90,6 +124,7 @@ namespace CGFramework
 		mResources.insert(std::make_pair(filename, resource));
 		return resource;
 	}
+
 	template<>
 	Material* ResourceManager::Load<Material>(const std::string& filename)
 	{
@@ -98,7 +133,7 @@ namespace CGFramework
 		ResourceMap::iterator it = mResources.find(filename);
 		if(it != mResources.end())
 		{
-			if(!(resource = dynamic_cast<Material*>(it->second)))
+			if(resource = dynamic_cast<Material*>(it->second))
 				return resource;
 			else
 				throw std::runtime_error("Requested type does not match the resource type! (in ResourceManager.h)");

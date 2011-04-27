@@ -46,7 +46,10 @@ namespace CGMath
 					m11(mat.m11),m12(mat.m12),m13(mat.m13),m14(mat.m14),
 					m21(mat.m21),m22(mat.m22),m23(mat.m23),m24(mat.m24),
 					m31(mat.m31),m32(mat.m32),m33(mat.m33),m34(mat.m34),
-					m41(mat.m41),m42(mat.m42),m43(mat.m43),m44(mat.m44){}
+					m41(mat.m41),m42(mat.m42),m43(mat.m43),m44(mat.m44)
+			{
+				int i = 0;
+			}
 
 			//Operator Overloads
 			Matrix4& operator=	(const Matrix4& mat)
@@ -131,6 +134,15 @@ namespace CGMath
 				m41 * scaler, m42 * scaler, m43 * scaler, m44 * scaler
 				);
 			}
+			Vector3 operator* (const Vector3& vec) const
+			{
+				return Vector3
+					   (
+							dot4(m11, m12, m13, m14, vec.x, vec.y, vec.z, 1),
+							dot4(m21, m22, m23, m24, vec.x, vec.y, vec.z, 1),
+							dot4(m31, m32, m33, m34, vec.x, vec.y, vec.z, 1)
+					   );
+			}
 
 			void operator+= (const Matrix4& mat)
 			{
@@ -148,8 +160,6 @@ namespace CGMath
 			{
 				*this = *this * scaler;
 			}
-
-			//Matrix Operations
 			void Identity()
 			{
 				m11 = 1; m12 = 0; m13 = 0; m14 = 0;
@@ -164,50 +174,79 @@ namespace CGMath
 				m31 = 0; m32 = 0; m33 = 0; m34 = 0;
 				m41 = 0; m42 = 0; m43 = 0; m44 = 0;
 			}
-			//void Inverse()
-			//{
-			//	//To Be Defined
-			//}
-			void Transpose()
+			Matrix4 Transpose()
 			{
-				Matrix4 t(*this);
+				return Matrix4(m11, m21, m31, m41, 
+							   m12, m22, m32, m42,
+							   m13, m23, m33, m43,
+							   m14, m24, m34, m44);
+				//t.m11 = m11; t.m21 = m12; t.m31 = m13; t.m41 = m14;
+				//t.m12 = m21; t.m22 = m22; t.m32 = m23; t.m42 = m24;
+				//t.m13 = m31; t.m23 = m32; t.m33 = m33; t.m43 = m34;
+				//t.m14 = m41; t.m24 = m42; t.m34 = m43; t.m44 = m44;
+				//return t;
+			}
 
-				m11 = t.m11; m12 = t.m21; m13 = t.m31; m14 = t.m41;
-				m21 = t.m12; m22 = t.m22; m23 = t.m32; m24 = t.m42;
-				m31 = t.m13; m32 = t.m23; m33 = t.m33; m34 = t.m43;
-				m41 = t.m14; m42 = t.m24; m43 = t.m34; m44 = t.m44;
-			}
-			/*	bool IsInvertible()
+			/* Translation */
+			void Translate(float x, float y, float z)
 			{
-				return false;
+				this->m14 = x;
+				this->m24 = y;
+				this->m34 = z;
 			}
-			bool IsSingular()
+			void Translate(const Vector3& vec)
 			{
-				return false;
-			}*/
+				this->m14 = vec.x;
+				this->m24 = vec.y;
+				this->m34 = vec.z;
+			}
+			void TranslateX(float x)
+			{
+				this->m14 = x;
+			}
+			void TranslateY(float y)
+			{
+				this->m24 = y;
+			}
+			void TranslateZ(float z)
+			{
+				this->m34 = z;
+			}
 
-			//Matrix Transformation Operations [Tested]
-			/*void CreatePerspectiveMatrix(float nearPlane, float farPlane, float aspect, float fov = D3DX_PI/3.0f)
-			{				
-				D3DXMATRIX temp;
-				D3DXMatrixPerspectiveFovLH(&temp, fov, aspect, nearPlane, farPlane);
-				*this = temp;
+			/* Scaling */
+			void Scale(float x, float y, float z)
+			{	
+				this->m11 = x;
+				this->m22 = y;
+				this->m33 = z;
 			}
-			void CreateOrthoMatrix(float width, float height, float nearPlane, float farPlane)
+			
+			/* Rotation */
+			void RotateX(float radians)
 			{
-				D3DXMATRIX temp;
-				D3DXMatrixOrthoLH(&temp, width, height, nearPlane, farPlane);
-				*this = temp;
+				this->Identity();
+				this->m22 = cos(radians);
+				this->m33 = this->m22;
+				this->m32 = sin(radians);
+				this->m23 = -(this->m23);
+				
 			}
-			void CreateViewMatrix(const Vector3& position, const Vector3& look, const Vector3& up = Vector3(0.0f, 1.0f, 0.0f))
+			void RotateY(float radians)
 			{
-				D3DXMATRIX temp;
-				D3DXMatrixLookAtLH(&temp, 
-								   &D3DXVECTOR3(position.x, position.y, position.z),
-								   &D3DXVECTOR3(look.x, look.y, look.z),
-								   &D3DXVECTOR3(up.x, up.y, up.z));
-				*this = temp;
-			}*/
+				this->Identity();
+				this->m11 = cos(radians);
+				this->m33 = this->m11;
+				this->m13 = sin(radians);
+			}	
+			void RotateZ(float radians)
+			{
+				this->Identity();
+				this->m11 = cos(radians);
+				this->m22 = this->m11;
+				this->m12 = -sin(radians);
+				this->m21 = (this->m12);
+			}
+
 			void RotateOnAxis(Vector3 axis, float radians)
 			{
 				float c = cos(radians);
@@ -228,97 +267,17 @@ namespace CGMath
 				this->m32 = (axis.y*axis.z)*(1 - c) - (axis.x*s);
 				this->m33 = c + ((axis.z*axis.z)*(1 - c));
 			}
-			//void RotateYawPitchRoll
-			void RotateX(float radians)
-			{/*
-				Matrix4 temp;
-				temp.Identity();
-				temp.m22 = cos(radians);
-				temp.m33 = temp.m22;
-				temp.m23 = sin(radians);
-				temp.m32 = -(temp.m23);
-				*this = (*this) * (temp);*/
-
-				this->Identity();
-				this->m22 = cos(radians);
-				this->m33 = this->m22;
-				this->m23 = sin(radians);
-				this->m32 = -(this->m23);
-				
-			}
-			void RotateY(float radians)
-			{
-				//Matrix4 temp;
-				////temp.Identity();
-				//temp.m11 = cos(radians);
-				//temp.m33 = temp.m11;
-				//temp.m31 = sin(radians);
-				//temp.m13 = -(temp.m31);
-				//*this = (*this) * (temp);
-
-				this->Identity();
-				this->m11 = cos(radians);
-				this->m33 = this->m11;
-				this->m31 = sin(radians);
-				this->m13 = -(this->m31);
-			}	
-			void RotateZ(float radians)
-			{
-				
-				Matrix4 temp;
-				temp.Identity();
-				temp.m11 = cos(radians);
-				temp.m22 = temp.m11;
-				temp.m12 = sin(radians);
-				temp.m21 = -(temp.m12);
-				*this = (*this)* (temp);
-
-				//this->Identity();
-			/*	this->m11 = cos(radians);
-				this->m22 = this->m11;
-				this->m12 = sin(radians);
-				this->m21 = -(this->m12);*/
-
-			}
-			void Scale(float x, float y, float z)
-			{	
-				//this->Identity();
-				this->m11 = x;
-				this->m22 = y;
-				this->m33 = z;
-			}
-			void TranslateXYZ(float x, float y, float z)
-			{
-				//this->Identity();
-				this->m41 = x;
-				this->m42 = y;
-				this->m43 = z;
-			}
-			void TranslateXYZ(const Vector3& vec)
-			{
-				//this->Identity();
-				this->m41 = vec.x;
-				this->m42 = vec.y;
-				this->m43 = vec.z;
-			}
-			void TranslateX(float x)
-			{
-				//this->Identity();
-				this->m41 = x;
-			}
-			void TranslateY(float y)
-			{
-				//this->Identity();
-				this->m42 = y;
-			}
-			void TranslateZ(float z)
-			{
-				//this->Identity();
-				this->m43 = z;
-			}
+						
 			Vector3 GetPositionXYZ() const
 			{
-				return Vector3(m41, m42, m43);
+				return Vector3(m14, m24, m34);
+			}
+			/* Returns a pointer to the first element of the matrix, these are going to be contiguous in memory
+			 * so it can be treated as an array pointer to the floats in row major format
+			 */
+			float* GetArrayPtr()
+			{
+				return &m11;
 			}
 		
 

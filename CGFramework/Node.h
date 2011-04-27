@@ -19,16 +19,27 @@ namespace CGFramework
 			mWorld.Identity();
 			mLocal.Identity();
 		}
-		//@param local the childs matrix offset
-		Node* CreateNode(const CGMath::Matrix4& local)
+
+		Node* CreateNode()
 		{
 			Node* child = new Node(this);
-			child->SetTransform(local);
+			mChildren.push_back(child);
+			return child;
+		}
+		Node* CreateNode(const CGMath::Matrix4& offset)
+		{
+			Node* child = new Node(this);
+			child->SetTransform(offset);
 			mChildren.push_back(child);
 			return child;
 		}
 		void InsertNode(Node* in)
 		{
+			mChildren.push_back(in);
+		}
+		void InsertNode(Node* in, const CGMath::Matrix4& offset)
+		{
+			in->SetTransform(offset);
 			mChildren.push_back(in);
 		}
 		virtual void Update(float dt, KeyboardState keyboardState, MouseState mouseState)

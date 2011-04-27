@@ -3,13 +3,13 @@
 <Material name ="BoxMaterial">
     <!--Choose a shader/tech that supports your semantics-->
     <Shader>
-        <PixelShader path ="toon.frag"/>
-        <FragmentShader path ="toon.vert"/>
+        <PixelShader path ="shaders/toon.frag"/>
+        <FragmentShader path ="shaders/toon.vert"/>
     </Shader>
 
     <!--All needed texture objects of this mesh-->
     <TextureObjects>
-        <Texture path ="earth.jpg"/>
+        <Texture path ="textures/earth.jpg"/>
     </TextureObjects>
 
     <!-- Specify Render states -->

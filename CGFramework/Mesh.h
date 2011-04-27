@@ -26,12 +26,6 @@ namespace CGFramework
 		Mesh()
 			:mMaterial(0){}
 
-		int GetTextureID() const 
-		{ return mMaterial->GetTexture(); }
-
-		int GetShaderID() const 
-		{ return mMaterial->GetShaderProgram(); }
-
 		//Both of these methods have the potential to be unsafe, due to the assumption
 		//the the std::vector stores it's data contiguously in memory. It's not guaranteed
 		//by the standard, but it is guaranteed in most implementations. If this gives you
@@ -47,11 +41,13 @@ namespace CGFramework
 
 		std::vector<unsigned int>* GetIndexPtr()
 		{ return &(mIndices);}
+		
+		int GetTextureID() const 
+		{ return mMaterial->GetTexture(); }
 
-		void SetTransform(const CGMath::Matrix4 world)
-		{
-			mWorld = world;
-		}
+		int GetShaderID() const 
+		{ return mMaterial->GetShaderProgram(); }
+
 		void SetMaterial(Material* in)
 		{
 			mMaterial = in;
@@ -60,11 +56,6 @@ namespace CGFramework
 		{
 			return mMaterialName;
 		}
-		CGMath::Matrix4 GetTransform() const
-		{
-			return mWorld;
-		}
-
 		int GetNumVerts() const 
 		{ return mVertices.size(); }
 
@@ -84,7 +75,6 @@ namespace CGFramework
 		std::string mMeshName;
 		std::string mMaterialName;
 		Material* mMaterial;
-		CGMath::Matrix4 mWorld;
 	};
 }
 #endif
