@@ -58,6 +58,7 @@ namespace CGFramework
 		bool mMouse[MouseState::NumButtons];
 		int mMouseX;
 		int mMouseY;
+		bool mMouseInitialized; //Store state of mouse
 	};
 }
 

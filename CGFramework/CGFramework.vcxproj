@@ -96,9 +96,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGLab2.h" />
     <ClInclude Include="CGLab3.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="FreeFormCamera.h" />
     <ClInclude Include="Geometry.h" />
+    <ClInclude Include="Matrix3.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="IApp.h" />
     <ClInclude Include="KeyboardState.h" />

@@ -127,31 +127,25 @@ void Renderer::Render(RenderBatch* batch)
 	std::list<CGMath::Matrix4*>::const_iterator transIt = transformList.begin();
 
 	const Camera& camera = batch->GetCamera();
-	
-	//******** TEMP CAMERA CODE
-	static float theta = 0;
-	theta += (3.14159265/8)*(1.0/60);
+
+	//Render this shit!
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//glLoadMatrix(camera.GetProjectionMatrix().GetArray());
-	gluPerspective(60, 4.0f/3.0f, 1, 1000);
-	//******** TEMP CAMERA CODE
+	camera.ApplyPerspectiveTransform();
 
-	//Note we can make this quicker by combining meshes to reduce draw calls
-	//if they have the same material/texture/shader 
 	while(meshIt != meshList.end())
 	{
 		int numPrims = (*meshIt)->GetIndexPtr()->size() /3;
 		int renderType = GL_TRIANGLES;
 
-		CGMath::Matrix4 t(**transIt);
-
+		//Set up view transform
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		gluLookAt(25*sin(theta),5,25*cos(theta),0,0,0,0,1,0);
+		camera.ApplyViewTransform();
 
+		//Model transform and render the mesh
 		glPushMatrix();
-		glMultTransposeMatrixf(t.GetArrayPtr());
+		glMultTransposeMatrixf((*transIt)->GetArrayPtr());
 		glColor3f(1,1,1);
 		glBindTexture(GL_TEXTURE_2D, (*meshIt)->mMaterial->GetTexture());
 		glTexCoordPointer(2, GL_FLOAT,8*sizeof(float),(*meshIt)->GetVertexArrayPtr());
@@ -206,12 +200,11 @@ void Renderer::Render(RenderBatch* batch)
 			glVertex3f(30.0, 0.0, 0.0);
 			glColor3f(0,1,0); // Green z-axis
 			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(0.0, 0.0, 30.0);
+			glVertex3f(0.0, 0.0, -30.0);
 			glColor3f(0,0,1); // Blue y-axis
 			glVertex3f(0.0, 0.0, 0.0);
 			glVertex3f(0.0, 30.0, 0.0);
 	glEnd();
-
 }
 void Renderer::EndRender()
 {

@@ -29,8 +29,8 @@ WindowsWrapper::WindowsWrapper(const std::string& title, HINSTANCE hInst, int wi
 
 	//Empty out the Keyboard and Mouse Arrays
 	memset(&mKeyboard, 0, sizeof(mKeyboard));
-
 	memset(&mMouse, 0, sizeof(mMouse));
+	mMouseInitialized = false;
 
 	//Assigns the struct to the window
 	if(!RegisterClassEx(&wc))
@@ -55,6 +55,9 @@ WindowsWrapper::WindowsWrapper(const std::string& title, HINSTANCE hInst, int wi
 
 	if(!mHwnd)
 		throw std::runtime_error("CreateWindow() Failed. Exiting...");
+
+	//Hide the mouse
+	//ShowCursor(false);
 
 	//Shows the window
 	ShowWindow(mHwnd, SW_SHOW);
@@ -125,20 +128,19 @@ LRESULT CALLBACK WindowsWrapper::WindowProc(HWND hWnd, UINT message, WPARAM wPar
 				mKeyboard[wParam] = false;
 				break;
 			}
-		case WM_MOUSEMOVE:
+		/*case WM_MOUSEMOVE:
 			{
 				//Drag Events 
-				/*if(wParam & MK_LBUTTON)
-					mMouse[Mouse::LEFT_CLICK] = true;
-				if(wParam & MK_RBUTTON)
-					mMouse[Mouse::RIGHT_CLICK] = true;
-				if(wParam & MK_MBUTTON)
-					mMouse[Mouse::MIDDLE_CLICK] = true;*/
-
+				//if(wParam & MK_LBUTTON)
+				//	mMouse[Mouse::LEFT_CLICK] = true;
+				//if(wParam & MK_RBUTTON)
+				//	mMouse[Mouse::RIGHT_CLICK] = true;
+				//if(wParam & MK_MBUTTON)
+				//	mMouse[Mouse::MIDDLE_CLICK] = true;
 				mMouseX = MAKEPOINTS(lParam).x;
 				mMouseY = MAKEPOINTS(lParam).y;
 				break;
-			}
+			}*/
 		case WM_LBUTTONDOWN:
 			{
 				mMouse[Mouse::LEFT_CLICK] = true;
@@ -173,13 +175,32 @@ void WindowsWrapper::PollKeyboard(KeyboardState& state)
 
 void WindowsWrapper::PollMouse(MouseState& state)
 {
-	int xPos = state.mScreenPosition.x;
-	int yPos = state.mScreenPosition.y;
-
+	//Reset the mouse, move the key events in
 	state.Reset();
 	memcpy(state.mButtonPressed, mMouse, sizeof(mMouse));
-	state.mRelativePosition.Set(mMouseX - xPos, mMouseY - yPos);
-	state.mScreenPosition.Set(mMouseX, mMouseY);
+
+	//Get our coordinates, and save the standard and relative coords, also, convert to Client Space
+	POINT mousePos;
+	GetCursorPos(&mousePos);
+	ScreenToClient(mHwnd, &mousePos);
+	
+	//Wait for mouse to center the first time before sending the relative position.
+	if(mousePos.x == (mWinWidth/2) && mousePos.y == (mWinHeight/2))
+		mMouseInitialized = true;
+
+	//If it has centered, start sending out relative coordinates.
+	if(mMouseInitialized)
+	{
+		state.mScreenPosition.Set(mousePos.x, mousePos.y);
+		state.mRelativePosition.Set(mousePos.x - (mWinWidth/2), mousePos.y - (mWinHeight/2));
+	}
+
+	//Keep the cursor centered so that we don't move out of the window, conver back from Client Space
+	mousePos.x = mWinWidth/2; 
+	mousePos.y = mWinHeight/2;
+	ClientToScreen(mHwnd, &mousePos);
+	if(GetForegroundWindow() == mHwnd)
+		SetCursorPos(mousePos.x, mousePos.y);
 }
 void WindowsWrapper::Exit()
 {

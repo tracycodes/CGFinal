@@ -228,8 +228,7 @@ namespace CGMath
 				this->m22 = cos(radians);
 				this->m33 = this->m22;
 				this->m32 = sin(radians);
-				this->m23 = -(this->m23);
-				
+				this->m23 = -(this->m32);
 			}
 			void RotateY(float radians)
 			{
@@ -237,6 +236,7 @@ namespace CGMath
 				this->m11 = cos(radians);
 				this->m33 = this->m11;
 				this->m13 = sin(radians);
+				this->m31 = -(this->m13);
 			}	
 			void RotateZ(float radians)
 			{
@@ -267,6 +267,30 @@ namespace CGMath
 				this->m32 = (axis.y*axis.z)*(1 - c) - (axis.x*s);
 				this->m33 = c + ((axis.z*axis.z)*(1 - c));
 			}
+			/*void ViewTransform()
+			{
+					//Create our orthonormal basis
+			CGMath::Vector3 vDir = look - position;
+			vDir.Normalize();
+			CGMath::Vector3 vUp = up - vDir*(up.Dot(vDir));
+			vUp.Normalize();
+			CGMath::Vector3 vSide = vDir.Cross(vUp);
+
+			//Plug it into a matrix (Creating the view to world matrix)
+			CGMath::Matrix3 rot(vSide.x, vUp.x, -vDir.x,
+								vSide.y, vUp.y, -vDir.y, 
+								vSide.z, vUp.z, -vDir.z);
+
+			CGMath::Vector3 invTrans = rot * position;
+
+			//Invert to create world->view matrix
+			CGMath::Matrix4 m(vSide.x, vUp.x, -vDir.x,   invTrans.x,
+							  vSide.y, vUp.y, -vDir.y,   invTrans.y,
+							  vSide.z, vUp.z, -vDir.z,   invTrans.z,
+							        0,      0,     0,   1);
+
+			mView = m;
+			}*/
 						
 			Vector3 GetPositionXYZ() const
 			{

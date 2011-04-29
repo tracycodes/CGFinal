@@ -32,7 +32,7 @@ namespace CGFramework
 		{
 			mCamera = in;
 		}
-		const Camera& GetCamera() const
+		Camera& GetCamera()
 		{
 			return *mCamera;
 		}

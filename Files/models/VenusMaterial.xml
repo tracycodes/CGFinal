@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Material name ="VenusMaterial">
+    <!--Choose a shader/tech that supports your semantics-->
+    <Shader>
+        <PixelShader path ="shaders/toon.frag"/>
+        <FragmentShader path ="shaders/toon.vert"/>
+    </Shader>
+
+    <!--All needed texture objects of this mesh-->
+    <TextureObjects>
+        <Texture path ="textures/venus.jpg"/>
+    </TextureObjects>
+
+    <!-- Specify Render states -->
+    <RenderStates>
+        <RenderType type ="TriangleList"/>
+    </RenderStates>
+</Material>

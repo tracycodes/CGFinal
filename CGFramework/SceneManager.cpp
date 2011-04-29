@@ -63,12 +63,22 @@ void SceneManager::UpdateEngine(float dt)
 		mWindows.Exit();
 	//Temporary code. Usually used for debugging
 	//GetFullScreen();
+	Camera* c = &mRenderBatch.GetCamera();
 	std::stringstream st;
-	//st << mMouseState.GetRelativePos().x << ", " << mMouseState.GetRelativePos().y;
-	//mWindows.SetWindowTitle(st.str());
+	st.precision(2);
+	if(mKeyboardState.IsPressed(Keyboard::F1))
+		st << mMouseState.GetRelativePos().x << ", " << mMouseState.GetRelativePos().y;
+	else if(mKeyboardState.IsPressed(Keyboard::F2))
+		st << mTimer.GetFps();
+	else if(c)
+	{
+		//st << "Direction: " << c->mDirection.x << ", " << c->mDirection.y << ", " <<  c->mDirection.z;
+		//st << " Up: " << c->mUp.x << ", " << c->mUp.y << ", " <<  c->mUp.z;
+		//st << " Right: " << c->mRight.x << ", " << c->mRight.y << ", " <<  c->mRight.z;
 
-
-	//Print the fps: TEMP
-	st << mTimer.GetFps();// << "\tx:" << mMouseState.GetZoom() << "\ty:" << mMouseState.GetY();
+		//st << "Look: " << c->mLookAt.x << ", " << c->mLookAt.y << ", " << c->mLookAt.z;
+		//st << " Up: " << c->mUp.x << ", " << c->mUp.y << ", " << c->mUp.z;
+		//st << " Position: " << c->mPosition.x << ", " << c->mPosition.y << ", " << c->mPosition.z;
+	}
 	mWindows.SetWindowTitle(st.str());
 }

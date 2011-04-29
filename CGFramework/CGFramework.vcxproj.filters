@@ -212,6 +212,12 @@
     <ClInclude Include="XmlWriter.h">
       <Filter>Content\XML Loader</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix3.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shader Files\toon.frag">

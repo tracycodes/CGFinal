@@ -46,6 +46,10 @@ namespace CGFramework
 		{
 			return mResourceManager.Load<T>(file1, file2);
 		}*/
+		Node* GetRoot()
+		{
+			return mSceneGraph.GetRoot();
+		}
 		void Run();
 		void Release();
 		~SceneManager();

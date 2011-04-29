@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 #include "Node.h"
+#include "Matrix3.h"
 
 namespace CGFramework
 {
@@ -11,54 +12,66 @@ namespace CGFramework
 		Camera(Node* parent)
 			:Node(parent)
 		{
-			//Construct the projection matrix and view matrix
+			//Set default projection
+			mNearPlane = .0001f;
+			mFarPlane = 5000;
+			mAspectRatio = 4.0f/3.0f;
+			mFieldofView = 60;
+
+			//Set default location and view transform
+			mUp.Set(0,1,0);
+			mDirection.Set(0,0,-1);
+			mPosition.Set(0,0,0);
+			mYaw = 0;
+			mPitch = 0;
 		}
-		void SetPerspectiveTransform(float near, float far, float aspect, float fieldofview)
+		CGMath::Vector3 GetPosition() const
 		{
-
+			return mWorld.GetPositionXYZ();
 		}
-		void SetViewTransform(const CGMath::Vector3& look, const CGMath::Vector3& position, const CGMath::Vector3& up)
+		void SetProjection(float nearplane, float farplane, float aspect, float fieldofview)
 		{
-			//Create our orthonormal basis
-			CGMath::Vector3 vDir = look - position;
-			vDir.Normalize();
-			CGMath::Vector3 vUp = up - vDir*(up.Dot(vDir));
-			vUp.Normalize();
-			CGMath::Vector3 vSide = vDir.Cross(vUp);
-
-			//Plug it into a matrix (Creating the view to world matrix)
-			CGMath::Matrix4 m(vSide.x, vUp.x, vDir.x,   position.x,
-							  vSide.y, vUp.y, vDir.y,   position.y,
-							  vSide.z, vUp.z, vDir.z,   position.z,
-							        0,      0,     0,   1);
-
-			//Invert to create world->view matrix
-
-
-
+			mNearPlane = nearplane;
+			mFarPlane = farplane;
+			mAspectRatio = aspect;
+			mFieldofView = fieldofview;
 		}
-		CGMath::Matrix4 GetViewMatrix() const
+		void ApplyPerspectiveTransform() const
 		{
-			return mView;
+			gluPerspective(mFieldofView, mAspectRatio, mNearPlane, mFarPlane);
 		}
-		CGMath::Matrix4 GetProjectionMatrix() const
+		void ApplyViewTransform() const
 		{
-			return mProjection;
+			gluLookAt(mPosition.x, mPosition.y, mPosition.z, mLookAt.x, mLookAt.y, mLookAt.z, mUp.x, mUp.y, mUp.z);
+		}		
+		virtual void Update(float dt, KeyboardState keyboardState, MouseState mouseState)
+		{
+			Node::Update(dt, keyboardState, mouseState);
 		}
 		virtual void PrepareForRender(RenderBatch* batch)
 		{
 			batch->SetCamera(this);
 			Node::PrepareForRender(batch);
 		}
-		virtual void Update(float dt, KeyboardState keyboardState, MouseState mouseState)
-		{
-			//Update the cameras matrices to move freeform etc.
+	protected:
+		//Axis system of the camera
+		CGMath::Vector3 mDirection;
+		CGMath::Vector3 mUp;
+		CGMath::Vector3 mRight;
 
-			Node::Update(dt, keyboardState, mouseState);
-		}
-	private:
-		CGMath::Matrix4 mView;
-		CGMath::Matrix4 mProjection;
+		//Point being looked at, and position of camera
+		CGMath::Vector3 mPosition;
+		CGMath::Vector3 mLookAt;
+
+		//Orientation of the camera
+		float mYaw;
+		float mPitch;
+
+		//Projection Variables
+		float mNearPlane;
+		float mFarPlane;
+		float mAspectRatio;
+		float mFieldofView;
 	};
 }
 
