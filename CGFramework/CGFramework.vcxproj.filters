@@ -197,9 +197,6 @@
     <ClInclude Include="IApp.h">
       <Filter>Scene\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Render_test.h">
-      <Filter>Application</Filter>
-    </ClInclude>
     <ClInclude Include="XmlElement.h">
       <Filter>Content\XML Loader</Filter>
     </ClInclude>
@@ -217,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="Constants.h">
       <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SolarSystem.h">
+      <Filter>Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

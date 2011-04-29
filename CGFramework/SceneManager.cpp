@@ -34,7 +34,7 @@ void SceneManager::Run()
 
 		//Update Phase
 		mTimer.Update();
-		mApp->Update(mTimer.GetDelta());
+		mApp->Update(mTimer.GetDelta(), mKeyboardState, mMouseState);
 		this->UpdateEngine(mTimer.GetDelta());
 		mSceneGraph.Update(mTimer.GetDelta(), mKeyboardState, mMouseState); //Only really needs to run with each new node creation
 		
@@ -66,9 +66,9 @@ void SceneManager::UpdateEngine(float dt)
 	Camera* c = &mRenderBatch.GetCamera();
 	std::stringstream st;
 	st.precision(2);
-	if(mKeyboardState.IsPressed(Keyboard::F1))
+	if(mKeyboardState.IsPressed(Keyboard::F4))
 		st << mMouseState.GetRelativePos().x << ", " << mMouseState.GetRelativePos().y;
-	else if(mKeyboardState.IsPressed(Keyboard::F2))
+	else if(mKeyboardState.IsPressed(Keyboard::F3))
 		st << mTimer.GetFps();
 	else if(c)
 	{
@@ -80,5 +80,5 @@ void SceneManager::UpdateEngine(float dt)
 		//st << " Up: " << c->mUp.x << ", " << c->mUp.y << ", " << c->mUp.z;
 		//st << " Position: " << c->mPosition.x << ", " << c->mPosition.y << ", " << c->mPosition.z;
 	}
-	mWindows.SetWindowTitle(st.str());
+	//mWindows.SetWindowTitle(st.str());
 }

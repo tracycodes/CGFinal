@@ -114,7 +114,7 @@
     <ClInclude Include="Point3.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RenderBatch.h" />
-    <ClInclude Include="Render_test.h" />
+    <ClInclude Include="SolarSystem.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneGraph.h" />

@@ -23,7 +23,6 @@ namespace CGFramework
 			mOrientation.Identity();
 
 			//Get Keyboard input
-			mPosition = mWorld.GetPositionXYZ();
 			if(keyboardState.IsPressed(Keyboard::W))
 				mPosition += mDirection/CAM_MOVE_SENSITIVITY;
 			if(keyboardState.IsPressed(Keyboard::A))

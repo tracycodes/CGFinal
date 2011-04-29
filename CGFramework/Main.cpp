@@ -7,7 +7,7 @@ Filename:   Framework - Main.cpp
 
 //Basic Header Files
 #include "SceneManager.h"
-#include "Render_test.h"
+#include "SolarSystem.h"
 
 //Temp
 #include "ObjLoader.h"
@@ -33,14 +33,8 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
 	#endif
 
 	CGFramework::SceneManager Scene("CGFramework", hInstance, SCREEN_WIDTH, SCREEN_HEIGHT);
-	CGFramework::RenderTest test(&Scene);
-
-	//delete t;
-	//delete r;
-	//delete m;
-
-	//ShaderTest newProject;
-  	Scene.SetApplication(&test);
+	CGFramework::SolarSystem system(&Scene);
+  	Scene.SetApplication(&system);
 	Scene.Run();
 	Scene.Release();
 	return 0;

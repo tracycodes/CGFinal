@@ -17,7 +17,7 @@ namespace CGFramework
 		IApp(SceneManager* scene)
 			:Scene(scene){}
 		virtual void Initialize() = 0;
-		virtual void Update(float dt) = 0;
+		virtual void Update(float dt, KeyboardState mKeyboardState, MouseState mMouseState) = 0;
 		virtual ~IApp(){};
 	protected:
 		SceneManager* Scene;

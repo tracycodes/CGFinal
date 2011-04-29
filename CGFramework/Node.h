@@ -18,6 +18,7 @@ namespace CGFramework
 		{
 			mWorld.Identity();
 			mLocal.Identity();
+			mIsActive = true;
 		}
 
 		Node* CreateNode()
@@ -33,14 +34,16 @@ namespace CGFramework
 			mChildren.push_back(child);
 			return child;
 		}
-		void InsertNode(Node* in)
+		Node* InsertNode(Node* in)
 		{
 			mChildren.push_back(in);
+			return in;
 		}
-		void InsertNode(Node* in, const CGMath::Matrix4& offset)
+		Node* InsertNode(Node* in, const CGMath::Matrix4& offset)
 		{
 			in->SetTransform(offset);
 			mChildren.push_back(in);
+			return in;
 		}
 		virtual void Update(float dt, KeyboardState keyboardState, MouseState mouseState)
 		{
@@ -73,6 +76,14 @@ namespace CGFramework
 		{
 			mLocal = local;
 		}
+		void Activate()
+		{
+			mIsActive = true;
+		}
+		void Deactivate()
+		{
+			mIsActive = false;
+		}
 		virtual ~Node()
 		{
 		}
@@ -83,6 +94,7 @@ namespace CGFramework
 		CGMath::Matrix4 mLocal;
 
 		std::list<Node*> mChildren;
+		bool mIsActive;
 	};
 }
 

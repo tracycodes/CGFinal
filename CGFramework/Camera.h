@@ -36,6 +36,10 @@ namespace CGFramework
 			mAspectRatio = aspect;
 			mFieldofView = fieldofview;
 		}
+		void SetLookAt(const CGMath::Vector3& look)
+		{
+			mLookAt = look;
+		}
 		void ApplyPerspectiveTransform() const
 		{
 			gluPerspective(mFieldofView, mAspectRatio, mNearPlane, mFarPlane);
@@ -47,25 +51,27 @@ namespace CGFramework
 		virtual void Update(float dt, KeyboardState keyboardState, MouseState mouseState)
 		{
 			Node::Update(dt, keyboardState, mouseState);
+			mPosition = mWorld.GetPositionXYZ();
 		}
 		virtual void PrepareForRender(RenderBatch* batch)
 		{
-			batch->SetCamera(this);
+			if(this->mIsActive)
+				batch->SetCamera(this);
 			Node::PrepareForRender(batch);
 		}
-	protected:
+	public:
 		//Axis system of the camera
-		CGMath::Vector3 mDirection;
-		CGMath::Vector3 mUp;
-		CGMath::Vector3 mRight;
+		CGMath::Vector3 mDirection; //child
+		CGMath::Vector3 mUp; //child
+		CGMath::Vector3 mRight; //child
 
 		//Point being looked at, and position of camera
 		CGMath::Vector3 mPosition;
 		CGMath::Vector3 mLookAt;
 
 		//Orientation of the camera
-		float mYaw;
-		float mPitch;
+		float mYaw; //child
+		float mPitch; //child
 
 		//Projection Variables
 		float mNearPlane;

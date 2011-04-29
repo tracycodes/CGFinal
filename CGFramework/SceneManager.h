@@ -50,6 +50,10 @@ namespace CGFramework
 		{
 			return mSceneGraph.GetRoot();
 		}
+		void SetWindowText(const std::string& text)
+		{
+			mWindows.SetWindowTitle(text);
+		}
 		void Run();
 		void Release();
 		~SceneManager();
