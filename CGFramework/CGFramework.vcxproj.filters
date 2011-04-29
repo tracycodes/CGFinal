@@ -218,6 +218,9 @@
     <ClInclude Include="SolarSystem.h">
       <Filter>Application</Filter>
     </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Renderer\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shader Files\toon.frag">

@@ -5,7 +5,7 @@
 using namespace CGFramework;
 
 SceneManager::SceneManager(const std::string& title, HINSTANCE hInst, int width, int height)
-	:mWindows(title, hInst, width, height), glRenderer(mWindows.GetHandle())
+	:mWindows(title, hInst, width, height), glRenderer(mWindows.GetHandle()), mTextDisplayer(glRenderer.GetHDC())
 {
 }
 void SceneManager::SetApplication(IApp* app)
@@ -42,7 +42,10 @@ void SceneManager::Run()
 		mSceneGraph.PrepareForRender(&mRenderBatch);
 		glRenderer.StartRender();
 			glRenderer.Render(&mRenderBatch);
+			mTextDisplayer.PrintText(mScreenText.c_str());
 		glRenderer.EndRender();
+		
+		//Render Text
 	}
 }
 void SceneManager::Release()

@@ -20,9 +20,6 @@ Filename:   Framework - Main.cpp
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-	class CBase { };
-	class CDerived: public CBase { };
-
 //Windows Entry Point - Initilizes Components
 int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nCmdShow)
 {

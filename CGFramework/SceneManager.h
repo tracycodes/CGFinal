@@ -11,6 +11,7 @@
 #include "ResourceManager.h"
 #include "Geometry.h"
 #include <string>
+#include "Font.h"
 
 namespace CGFramework
 {
@@ -54,6 +55,10 @@ namespace CGFramework
 		{
 			mWindows.SetWindowTitle(text);
 		}
+		void SetScreenText(const std::string& text)
+		{
+			mScreenText = text;
+		}
 		void Run();
 		void Release();
 		~SceneManager();
@@ -76,6 +81,8 @@ namespace CGFramework
 		SceneGraph mSceneGraph;
 		RenderBatch mRenderBatch;
 		ResourceManager mResourceManager;
+		Font mTextDisplayer;
+		std::string mScreenText;
 	};
 }
 

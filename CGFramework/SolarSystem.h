@@ -17,6 +17,7 @@ namespace CGFramework
 			:IApp(scene)
 		{
 			Scene->SetRelativePath("../Files/");
+			Scene->SetScreenText("Wtf? Wtf?Wtf?Wtf?Wtf?\nWtf? Wtf?Wtf?Wtf?Wtf?\nWtf? Wtf?Wtf?Wtf?Wtf?\nWtf? Wtf?Wtf?Wtf?Wtf?\nWtf? Wtf?Wtf?Wtf?Wtf?\nWtf? Wtf?Wtf?Wtf?Wtf?\nWtf? Wtf?Wtf?Wtf?Wtf?\nWtf? Wtf?Wtf?Wtf?Wtf?\n");
 
 			//Set some initial rotation angles
 			srand(time(NULL));
@@ -55,10 +56,10 @@ namespace CGFramework
 			}
 
 			//Load in our skybox
-			//transform.Identity();
-			//transform.Scale(50,50,50);
-			//mSkybox = Scene->InsertModel("models/Skybox.obj");
-			//mSkybox->SetTransform(transform);
+			transform.Identity();
+			transform.Scale(50,50,50);
+			mSkybox = Scene->InsertModel("models/Skybox.obj");
+			mSkybox->SetTransform(transform);
 
 			//Insert Freeform camera into scene
 			transform.Identity();
@@ -83,6 +84,7 @@ namespace CGFramework
 			{
 				DeactivateCams();
 				mPlanetCameras[0]->Activate();
+				Scene->SetScreenText("Hey Bitches, I'm the sun!");
 			}
 			if(keyboardState.IsPressed(Keyboard::NUM1))
 			{

@@ -98,6 +98,7 @@
     <ClInclude Include="CGLab3.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Error.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="FreeFormCamera.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Matrix3.h" />
